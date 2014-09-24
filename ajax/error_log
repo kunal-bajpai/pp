@@ -1,0 +1,9 @@
+[25-Aug-2014 13:24:05 UTC] PHP Warning:  file_put_contents(/home/photopuddle/public_htmlpictures/projects/project/log): failed to open stream: No such file or directory in /home/photopuddle/public_html/includes/logProject.php on line 18
+[25-Aug-2014 13:24:05 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/photopuddle/public_html/includes/logProject.php:18) in /home/photopuddle/public_html/includes/session.php on line 14
+[25-Aug-2014 13:24:05 UTC] PHP Notice:  Undefined index: pref in /home/photopuddle/public_html/ajax/finalise.php on line 28
+[25-Aug-2014 13:26:39 UTC] PHP Warning:  file_put_contents(/home/photopuddle/public_html/pictures/projects/project/log): failed to open stream: No such file or directory in /home/photopuddle/public_html/includes/logProject.php on line 18
+[25-Aug-2014 13:26:39 UTC] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/photopuddle/public_html/includes/logProject.php:18) in /home/photopuddle/public_html/includes/session.php on line 14
+[25-Aug-2014 13:26:39 UTC] PHP Notice:  Undefined index: pref in /home/photopuddle/public_html/ajax/finalise.php on line 28
+[25-Aug-2014 13:32:02 UTC] PHP Fatal error:  Call to a member function log_action_anon() on a non-object in /home/photopuddle/public_html/ajax/finalise.php on line 25
+[25-Aug-2014 13:35:08 UTC] PHP Notice:  Undefined index: pref in /home/photopuddle/public_html/ajax/finalise.php on line 28
+[26-Aug-2014 17:02:51 UTC] PHP Parse error:  syntax error, unexpected '/' in /home/photopuddle/public_html/includes/functions.php on line 71

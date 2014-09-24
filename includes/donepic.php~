@@ -1,0 +1,21 @@
+<?php
+	class DonePic extends DatabaseObject
+	{
+		protected static $tableName = 'donepics';
+		
+		public static function find_for_project($project)
+		{
+			return self::find_by_sql("SELECT donepics.id id, original, chosen, donepics.name name FROM donepics JOIN pictures ON donepics.original = pictures.id WHERE pictures.project = '{$project->id}'");
+		}
+		
+		public is_chosen()
+		{
+			$db = Database::get_instance();
+			$res = $db->fetch_array($db->query("SELECT chosen FROM donepics WHERE id = '{$this->id}'"));
+			if($res[0][0] == '0')
+				return false;
+			else
+				if($res[0][0] == '1')
+					return true;
+		}
+	}

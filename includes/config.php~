@@ -1,0 +1,16 @@
+<?php
+//define constants used later
+!defined('SITE_ROOT')?define('SITE_ROOT',$_SERVER['DOCUMENT_ROOT'].'/pp/'):NULL;
+!defined('LIB_PATH')?define('LIB_PATH',SITE_ROOT.'/includes/'):NULL;
+!defined('HOST')?define('HOST','localhost'):NULL;
+!defined('USER')?define('USER','root'):NULL;
+!defined('PASS')?define('PASS',''):NULL;
+!defined('DB')?define('DB','pp'):NULL;
+!defined('READABLE_LOG_FILE')?define('READABLE_LOG_FILE',LIB_PATH."log_readable"):NULL;
+!defined('LOGIN_PAGE')?define('LOGIN_PAGE',"/quark/admin/index.php"):NULL;
+!defined('ADMIN_LOGIN_PAGE')?define('ADMIN_LOGIN_PAGE',"/quark/admin/index.php"):NULL;
+!defined('UPLOAD_DIR')?define('UPLOAD_DIR',"../pictures/"):NULL;
+!defined('DEFAULT_IMAGE')?define('DEFAULT_IMAGE',"default.png"):NULL;
+!defined('GCM_PROJECT_ID')?define('GCM_PROJECT_ID',"599449460569"):NULL;
+!defined('GOOGLE_API_KEY')?define('GOOGLE_API_KEY',"AIzaSyA4nsz7PUK-26cGhC5VuYXRJak4YAUKCtE"):NULL;  
+

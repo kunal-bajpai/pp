@@ -1,0 +1,2 @@
+[22-Sep-2014 15:04:59 UTC] PHP Warning:  require_once(../includes/init.php): failed to open stream: No such file or directory in /home/photopuddle/public_html/admin/ajax/getAllPictures.php on line 7
+[22-Sep-2014 15:04:59 UTC] PHP Fatal error:  require_once(): Failed opening required '../includes/init.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/photopuddle/public_html/admin/ajax/getAllPictures.php on line 7

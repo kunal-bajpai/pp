@@ -1,0 +1,154 @@
+function addClass(elem,className)
+{
+	elem.setAttribute('class',elem.className.replace(' '+className,''));;
+	elem.setAttribute('class',elem.className+' '+className);
+}
+
+function removeClass(elem,className)
+{
+	elem.setAttribute('class',elem.className.replace(' '+className,''));
+}
+
+var xmlusername = new XMLHttpRequest(), timeout;
+
+xmlusername.onreadystatechange = function() {
+	if(this.readyState==4 && this.status==200)
+	{
+		elem = document.getElementById("su_username");
+		if(this.responseText == '1')
+		{
+			document.getElementById("usernamestatus").innerHTML = '';
+			removeClass(elem,'invalid');
+			addClass(elem,'valid');
+		}
+		else
+		{
+			document.getElementById("usernamestatus").innerHTML = 'Sorry, username taken.';
+			removeClass(elem,'valid');
+			addClass(elem,'invalid');
+		}
+	}
+}
+
+function checkWith(elem,re) {
+
+	if(!re.test(elem.value))
+	{
+		removeClass(elem,'valid');
+		addClass(elem,'invalid');
+	}
+	else
+	{
+		removeClass(elem,'invalid');
+		addClass(elem,'valid');
+	}
+}
+
+document.getElementById("su_firstname").onblur = function() { checkWith(this, /^[a-zA-Z]+$/)};
+document.getElementById("su_lastname").onblur = function() { 
+	if(this.value!='')
+		checkWith(this, /^[a-zA-Z]+$/)
+	else
+	{
+		removeClass(this,'invalid');
+		addClass(this,'valid');
+	}
+};
+
+document.getElementById("su_email").onblur = function() { checkWith(this, /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)};
+
+document.getElementById("su_password").onblur = function() { 
+	checkWith(this, /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,15}$/)
+	var rep = document.getElementById("su_rep_password");
+	if(this.value != rep.value)
+	{
+		removeClass(rep,'valid');
+		addClass(rep,'invalid');
+	}
+	else
+	{
+		removeClass(rep,'invalid');
+		addClass(rep,'valid');
+	}
+};
+
+document.getElementById("su_rep_password").onblur = function() {
+	if(this.value != document.getElementById("su_password").value)
+	{
+		removeClass(this,'valid');
+		addClass(this,'invalid');
+	}
+	else
+	{
+		removeClass(this,'invalid');
+		addClass(this,'valid');
+	}
+}
+
+document.getElementById("su_username").oninput = function() {
+	var re = /^(?=[^\._]+[\._]?[^\._]+$)[\w\.]{6,15}$/;
+	if(typeof timeout == "number")
+			clearTimeout(timeout);
+	if(re.test(this.value))
+	{
+		removeClass(this,'invalid');
+		removeClass(this,'valid');
+		setTimeout(function() {
+			document.getElementById("usernamestatus").innerHTML = 'Checking availability...';
+			xmlusername.open("POST","ajax/username.php",true);
+			xmlusername.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xmlusername.send("username="+document.getElementById("su_username").value);
+		},1500);
+	}
+	else
+	{
+		document.getElementById("usernamestatus").innerHTML = '';
+		removeClass(this,'valid');
+		addClass(this,'invalid');
+	}
+}
+
+document.getElementById("su_tests").onchange = function() {
+	if(testImgs.length == this.files.length)
+	{
+		for(var i=0;i<this.files.length;i++)
+		{
+			if(testImgs.indexOf(this.files[i].name) < 0)
+			{
+				removeClass(this,'valid');
+				addClass(this,'invalid');	
+				return;
+			}
+			removeClass(this,'invalid');
+			addClass(this,'valid');
+		}
+	}
+	else
+	{
+		removeClass(this,'valid');
+		addClass(this,'invalid');
+	}
+}
+
+document.getElementById("signUpForm").onsubmit = function() {
+	lastname = document.getElementById("su_lastname");
+	if(lastname.value=='')
+	{
+		removeClass(lastname,'invalid');
+		addClass(lastname,'valid');
+	}
+	else
+	{
+		removeClass(lastname,'valid');
+		addClass(lastname,'invalid');
+	}
+	var elems = this.getElementsByClassName("valid");
+	var reqdValid = this.getElementsByTagName("input");
+	
+	if(elems.length!==reqdValid.length)
+		return false;
+	else
+		for(var i=0;i<reqdValid.length;i++)
+			if(elems.indexOf(reqdValid[i])<0)
+				return false;
+}

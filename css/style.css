@@ -1,0 +1,230 @@
+@font-face
+{
+font-family: PhotoPuddleRegular;
+src: url('fonts/FontR.otf');
+}
+
+
+@font-face
+{
+font-family: ThinFont;
+src: url('fonts/thinfont.ttf');
+}
+
+
+/*
+
+body{
+	background: #cccccc; /* Old browsers */
+/*background: -moz-radial-gradient(center, ellipse cover,  #cccccc 1%, #c4c4c4 51%, #666666 100%); /* FF3.6+ */
+/*background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%,#cccccc), color-stop(51%,#c4c4c4), color-stop(100%,#666666)); /* Chrome,Safari4+ */
+/*background: -webkit-radial-gradient(center, ellipse cover,  #cccccc 1%,#c4c4c4 51%,#666666 100%); /* Chrome10+,Safari5.1+ */
+/*background: -o-radial-gradient(center, ellipse cover,  #cccccc 1%,#c4c4c4 51%,#666666 100%); /* Opera 12+ */
+/*background: -ms-radial-gradient(center, ellipse cover,  #cccccc 1%,#c4c4c4 51%,#666666 100%); /* IE10+ */
+/*background: radial-gradient(ellipse at center,  #cccccc 1%,#c4c4c4 51%,#666666 100%); /* W3C */
+/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#666666',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+/*
+	background-attachment: fixed;
+	background-size: 100% 100%;
+
+}*/
+
+
+body,html{
+	height:100%;
+	z-index:1;
+
+
+}
+
+#container{
+	font-family: PhotoPuddleRegular, sans-serif ;
+	position:relative;
+	height: 100%;
+	
+	z-index:1;
+    position: relative;
+    width: 100%;
+
+}
+
+#left{
+	background-image:url(../images/wall_left.jpg);
+	background-position: left;
+	background-size: 50% 100%;
+	background-attachment: fixed;
+	z-index:10;
+	width:50%;
+	height:100%;
+	float:left;
+}
+
+
+#right{
+	background-image:url(../images/wall_right.jpg);
+	background-position: right;
+	background-size: 50% 100%;
+	background-attachment: fixed;
+	z-index:10;
+	float:left;
+	width:50%;
+	height:100%;
+	box-shadow:-2px 0 5px 0.5px #000;
+}
+
+
+.black_overlay{background-color: #000;
+	overflow: hidden;
+	width:100%;
+	height:100%;
+	opacity:0.5;
+	z-index:20;
+
+
+	-webkit-transition: opacity .3s ease-in-out;
+        -moz-transition: opacity .3s ease-in-out;
+        -ms-transition: opacity .3s ease-in-out;
+        -o-transition: opacity .3s ease-in-out;
+        transition: opacity .3s ease-in-out;
+	
+}
+
+
+.black_overlay:hover{
+	opacity:0;
+
+	-webkit-transition: opacity .3s ease-in;
+        -moz-transition: opacity .3s ease-in;
+        -ms-transition: opacity .3s ease-in;
+        -o-transition: opacity .3s ease-in;
+        transition: opacity .3s ease-in;
+}
+
+
+#button_left{
+	background-color: #73BF2D;
+}
+
+#button_right{
+	background-color: #3399CC;
+}
+
+.button_homeleft{
+	font-family: thinfont;
+	font-weight: bolder;
+	text-transform: uppercase;
+	font-size: 22px;
+	color: #d2d2d2;
+	width:25%;
+	text-align: center;
+	margin:22.5% 10% 0 ;
+	padding:1.3% 0%;
+	position:absolute;
+	z-index:30;
+	cursor:pointer;
+	box-shadow:0 0 13px #000;
+	text-decoration: none;
+	border-top-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+}
+
+.button_homeright{
+	font-family: thinfont;
+	font-weight: bolder;
+	text-transform: uppercase;
+	font-size: 22px;
+	color: #d2d2d2;
+	width:25%;
+	text-align: center;
+	margin:22.5% 10% 0 ;
+	padding:1.3% 0%;
+	position:absolute;
+	z-index:30;
+	cursor:pointer;
+	box-shadow:0 0 13px #000;
+	text-decoration: none;
+	border-top-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+.button_homeleft:hover{
+	cursor:pointer;
+	box-shadow: 0 0 0.5px 1px #ffffff;
+	color: #ffffff;
+
+
+	-webkit-transition: all 0.1s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -ms-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.1s ease-o
+}
+
+.button_homeright:hover{
+	cursor:pointer;
+	box-shadow: 0 0 0.5px 1px #ffffff;
+	color: #ffffff;		
+
+
+	-webkit-transition: all 0.1s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -ms-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.1s ease-o
+}
+
+.round-corners {
+  display: inline-block;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-property: border-radius;
+  transition-property: border-radius;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+.round-corners:hover {
+  border-radius: 20px;
+}
+
+
+#logo_home{
+
+	
+
+	
+	position: absolute;
+	bottom:10%;
+	left:46%;
+	z-index:50;
+
+	width:8%;
+	height:15%;
+	
+	
+	
+}
+
+
+#logoname_home{
+/*
+	border:2px inset #232323;
+	border-radius:45%; ***/
+	position: absolute;
+	top:10%;
+	right: 0%;
+	margin: auto;
+	z-index:50;
+
+	/*width:28%;
+	height:7.5%;
+	*/
+	
+	
+}
+
+
+
+
