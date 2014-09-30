@@ -42,8 +42,8 @@
 			<div class="hexagon-in1">
 			  
 			  <div class="hexagon-in2" data-pic="01.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/01.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/01.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/01.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/01.jpg);"></div>
 			   </div>					
 			</div>
 		  </div>
@@ -54,8 +54,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="02.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/02.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/02.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/02.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/02.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -66,8 +66,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="03.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/03.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/03.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/03.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/03.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -78,8 +78,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="04.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/04.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/04.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/04.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/04.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -90,8 +90,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="05.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/05.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/05.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/05.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/05.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -151,8 +151,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="10.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/10.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/10.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/10.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/10.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -163,8 +163,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="11.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/11.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/11.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/11.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/11.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -175,8 +175,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="12.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/12.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/12.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/12.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/12.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -187,8 +187,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="13.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/13.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/13.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/13.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/13.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -199,8 +199,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="14.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/14.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/14.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/14.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/14.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -211,8 +211,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="15.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/15.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/15.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/15.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/15.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -223,8 +223,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="16.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/16.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/16.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/16.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/16.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -235,8 +235,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="17.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/17.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/17.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/17.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/17.jpg);"></div>
 			   </div>
 			</div>
 		  </div>
@@ -247,8 +247,8 @@
 		  <div class="hexagon hexagon2 gallery-item">
 			<div class="hexagon-in1">
 			  <div class="hexagon-in2" data-pic="18.jpg">
-			   	<div id='befdiv' style="background-image: url(pictures/home/before/18.jpg);"></div>
-			   	<div id='aftdiv' style="background-image: url(pictures/home/after/18.jpg);"></div>
+			   	<div class='befdiv' style="background-image: url(pictures/home/before/18.jpg);"></div>
+			   	<div class='aftdiv' style="background-image: url(pictures/home/after/18.jpg);"></div>
 			   </div>
 			</div>
 		  </div>

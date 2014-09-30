@@ -11,7 +11,7 @@
 	{
 		foreach($files as $file)
 			if($file!='.' && $file!='..')
-				$result[] = $file;
+				$result[]['name'] = $file;
 	}
 	echo json_encode($result);
 ?>

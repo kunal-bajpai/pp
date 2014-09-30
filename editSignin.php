@@ -59,11 +59,11 @@
 	{
 		//cross check posted signup form
 		$editor = Editor::find_by_username($_POST['username']);
-		$firstname = isset($_POST['firstname']) && preg_match('/^[a-zA-Z]+$/',$_POST['firstname']);
-		$lastname = isset($_POST['lastname']) && preg_match('/^[a-zA-Z]+$/',$_POST['lastname']) || $_POST['lastname'] == '';
+		$firstname = isset($_POST['firstname']) && verify_firstname($_POST['firstname']);
+		$lastname = isset($_POST['lastname']) && verify_lastname($_POST['lastname']);
 		$email = isset($_POST['email']) && verify_email($_POST['email']);
 		$username = isset($_POST['username']) && verify_username($_POST['username']) && !isset($editor);
-		$password = isset($_POST['password']) && preg_match('/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,15}$/',$_POST['password']) && $_POST['password'] == $_POST['rep_password'];
+		$password = isset($_POST['password']) && verify_password($_POST['password']) &&  $_POST['password'] == $_POST['rep_password'];
 		$results = scandir(SITE_ROOT."pictures/tests");
 		$files = array();
 		$testNames=array();
@@ -124,18 +124,16 @@
 	<div id='wrapper-left'>
 		<h5 id='wel2' class='greenc'>Sign In :</h5>
 		<br />
-	<?php
-		if($incUsername)
-			echo "Incorrect username";
-		if($incPassword)
-			echo "Incorrect password";
-		if($unverified)
-			echo "User unverified. Please verify email before logging in";						
-   ?>		   
+			   
 		<div id='login1'>
+			<?php
+			if($incUsername)
+				echo "Incorrect username";
+			if($incPassword)
+				echo "Incorrect password";
+			if($unverified)
+				echo "User unverified. Please verify email before logging in";?>
 			<form id='signInForm' method="POST">
-
-
 				<input type='text' name='login_username' placeholder='Username/Email'/><br />
 				<input type="password" name='login_password' placeholder='Password'/>
 				<input type="submit" value="&#10137;"><br />

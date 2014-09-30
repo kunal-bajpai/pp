@@ -1,3 +1,6 @@
+<?php
+	require_once("includes/init.php");
+?>
 <!DOCTYPE html>
  <html lang="en">
    <head>
@@ -15,13 +18,6 @@
 	<link rel="stylesheet" href="css/menu.css">
 	<link rel="stylesheet" href="css/progressbar.css">
 	</head>
-<script>
-   var testImgs;
-   xmltest = new XMLHttpRequest();
-   xmltest.open("GET","ajax/getTestImages.php",false);
-   xmltest.send();
-   testImgs = JSON.parse(xmltest.responseText);
-</script>
 	<body>
 	<div id="logobkg">
 	<a href="index.php">
@@ -74,7 +70,7 @@
 					<div id="togglebasictable">
 						<div id='largerhead1' class='greenc zfix'>BASIC</div>
 						<div id='smallerhead1' class='greenc zfix'>Editing</div>
-						<div id='basicprice' class='text-center pricing greenc'>Unlimited Uploads <span class='text-bold'>Rs 19/photo</span></div>
+						<div id='basicprice' class='text-center pricing greenc'>Unlimited Uploads <span class='text-bold'>Rs <?php echo BASIC_PRICE;?>/photo</span></div>
 						<p id="tri2"></p>
 					</div>
 					<div class='infolist'>
@@ -121,7 +117,7 @@
 					<div id='toggleadvtable'>
 						<div id='largerhead2' class='bluec zfix'>ADVANCED</div>
 						<div id='smallerhead2' class='bluec zfix'>Editing</div>
-						<div id='advprice'class='text-center pricing bluec'>Unlimited Uploads <span class='text-bold'>Rs 29/photo</span></div>
+						<div id='advprice'class='text-center pricing bluec'>Unlimited Uploads <span class='text-bold'>Rs <?php echo ADVANCED_PRICE;?>/photo</span></div>
 						<p id="tri3"></p>
 					</div>
 					<div class='infolist'>
@@ -275,7 +271,7 @@
 				<div class="modal-content" class='wrap_modal'>
 					
 				<!-- Change the value to the current percentage uploaded in the span -->
-				   <div class="uploadStage">Uploading Photos...</div>
+				   <div class="uploadStage">Uploading Photos. Please wait...</div>
 				   <div class="progressNumber">
 					   <div class='greenbar' style="width:25%;"></div><div class='bluebar' style='width:75%;'></div>
 					   <div class='uploadper'>25<span style='color:#3399CC'>%</span></div>
@@ -289,58 +285,53 @@
 									x Successes, y Failed
 								</div>
 								<div id="editorsampleimgs">
-									<a class="testpiclink" href="#basic-testprev">
+								<?php
+									if(!is_dir("pictures/tests"))
+										mkdir("pictures/tests",0777,true);
+									$files = scandir("pictures/tests");
+									if(is_array($files))
+										foreach($files as $file)
+											if($file!='.' && $file!='..'):?>
+									<a class="testpiclink" >
 									   <div class='esi testpic'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
+										   <img  class='boright test'/>
+										   <img  class='edited'/>
 									   </div>
 									</a>
-									<a class="testpiclink" href="#basic-testprev">
-									   <div class='esi testpic'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
-									   </div>
-									</a>
-									<a class="testpiclink" href="#basic-testprev">
-									   <div class='esi testpic' style='margin-right:0px;'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
-									   </div>
-									</a>
+								<?php endif;?>
 								</div>
 								<div id='givePreference'>
 									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
 								</div>
+								<div style="clear:both" id="clearDiv"></div>
 							</div>
 							<hr id="hr1" class='editorrule'/>
+
 						   <div data-id='0' style="visibility:hidden" class="editor" data-chosen="false">
 								<div id="editorsf">
 									<h1 id='EditorName'>Jimmy Falcon2</h1>
 									x Successes, y Failed
 								</div>
 								<div id="editorsampleimgs">
-									<a class="testpiclink" href="#basic-testprev">
+								<?php
+									if(!is_dir("pictures/tests"))
+										mkdir("pictures/tests",0777,true);
+									$files = scandir("pictures/tests");
+									if(is_array($files))
+										foreach($files as $file)
+											if($file!='.' && $file!='..'):?>
+									<a class="testpiclink" >
 									   <div class='esi testpic'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
+										   <img  class='boright test'/>
+										   <img  class='edited'/>
 									   </div>
 									</a>
-									<a class="testpiclink" href="#basic-testprev">
-									   <div class='esi testpic'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
-									   </div>
-									</a>
-									<a class="testpiclink" href="#basic-testprev">
-									   <div class='esi testpic' style='margin-right:0px;'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
-									   </div>
-									</a>
+								<?php endif;?>
 								</div>
 								<div id='givePreference'>
 									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
 								</div>
+								<div style="clear:both" id="clearDiv"></div>
 							</div>
 							  <hr id="hr2" class='editorrule'/>
 							  
@@ -350,28 +341,25 @@
 									x Successes, y Failed
 								</div>
 								<div id="editorsampleimgs">
-									<a class="testpiclink" href="#basic-testprev">
+								<?php
+									if(!is_dir("pictures/tests"))
+										mkdir("pictures/tests",0777,true);
+									$files = scandir("pictures/tests");
+									if(is_array($files))
+										foreach($files as $file)
+											if($file!='.' && $file!='..'):?>
+									<a class="testpiclink" >
 									   <div class='esi testpic'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
+										   <img  class='boright test'/>
+										   <img  class='edited'/>
 									   </div>
 									</a>
-									<a class="testpiclink" href="#basic-testprev">
-									   <div class='esi testpic'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
-									   </div>
-									</a>
-									<a class="testpiclink" href="#basic-testprev">
-									   <div class='esi testpic' style='margin-right:0px;'>
-										   <img src="./images/dummy.JPG" class='boright test'/>
-										   <img src="./images/dummy.JPG" class='edited'/>
-									   </div>
-									</a>
+								<?php endif;?>
 								</div>
 								<div id='givePreference'>
 									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
 								</div>
+								<div style="clear:both" id="clearDiv"></div>
 							</div>
 							<div id="clearDiv" style="clear:both"></div>
 					</div>
@@ -387,7 +375,7 @@
 			  </section>
 				<!-- ********************************************************************************************************************* -->
 			   <!-- 2.5th basic modal starts here --> 
-			  <section class="semantic-content" data-order="2" id="basic-testprev" tabindex="-1" role="dialog" aria-labelledby="modal-label4" aria-hidden="true">
+<!--			  <section class="semantic-content" data-order="2" id="basic-testprev" tabindex="-1" role="dialog" aria-labelledby="modal-label4" aria-hidden="true">
 				<div class="modal-inner">
 				<header>
 				   <a href='#basic-uploading'><div id='closebutton' href='#basic-uploading' title="Close this modal" data-dismiss="modal">&times;</div></a>
@@ -412,7 +400,7 @@
 				<!-- Use Hash-Bang to maintain scroll position when closing modal -->
 				<a href="#basic-uploading" class="modal-close" title="Close this modal"
 					data-dismiss="modal">&times;</a>
-			  </section>
+			  </section>-->
 				<!-- ********************************************************************************************************************* -->
 				 <!-- 3rd modal starts here --> 
 			  <section class="semantic-content" id="basic-imagesprev" data-order="3" tabindex="-1" role="dialog" aria-labelledby="modal-label3" aria-hidden="true">
@@ -468,7 +456,7 @@
 				<div id='leftbtn' onclick="changePic(-1)"><img src="./images/arrowleft.png"></div>
 				<div id='rightbtn' onclick="changePic(1)"><img src="./images/arrowright.png"></div>
 					<div id='slider1'>
-					<img id="prevpic" src="./images/dummy2.jpg">
+					<img id="prevpic">
 					
 					</div>
 				   <div id='picinstr'>
@@ -554,6 +542,17 @@
 				  <div id='righthalfpic'><div id='prevPic22' class="modalImg2" ></div></div>
 				</div>
 			  </div>
+			<div id="photoModal3" style="display:none">
+				<div class='fullwhiteoverlay'></div>
+				<div id='closeButton5' class='closeButton'></div>
+				<div id='leftButton5' class='modalButton '></div>
+				<div id='rightButton5' class='modalButton'></div>
+
+				<div id='photoModal2' class='photoModal'>
+				  <div id='lefthalfpic'><div id='prevPic21' class="modalImg" ></div></div>
+				  <div id='righthalfpic'><div id='prevPic22' class="modalImg2" ></div></div>
+				</div>
+			  </div>
 
 		<script src="js/jquery-1.11.0.min.js"></script>
 		<script src="js/modal.js"></script><!-- JS for Modal -->
@@ -569,11 +568,11 @@
 				});
 				$(window).scroll(function(){
 				if ($(this).scrollTop() > 100) {
-				  $('#upscroll').fadeIn();
-				  $('.scrolldowndiv').fadeOut();
+				  $('#upscroll').css('visibility','visible');
+				  $('.scrolldowndiv').css('visibility','hidden');
 				} else {
-				  $('#upscroll').fadeOut();
-				  $('.scrolldowndiv').fadeIn();
+				  $('#upscroll').css('visibility','hidden');
+				  $('.scrolldowndiv').css('visibility','visible');
 				}
 				});
 				/*$(function() { //When the document loads

@@ -10,6 +10,7 @@ var stage = 1, //stores current stage in which the process of project creation i
 	projInstr, //project instructions for editor
 	xmleditor, //xhr object to fetch editors
 	xmlUpload, //xhr for uploading photos
+	testImgs, //test images
 	uploadedPictures, //array of names of all uploaded pictures
 	projectId=0, //project id received from server. 0 means project not added to db yet
 	projectPass, //password for the customer to log in to custSignin.php
@@ -112,7 +113,6 @@ function setMode(newMode) {
 				if(editors[i].dataset.chosen == "true")
 					prefToggle(editors[i]);
 			}
-			addToList(getEditors(3));
 			
 			var num = document.getElementsByClassName('progressNumber'); //hide progress bar
 			for(i=0;i<num.length;i++)
@@ -132,7 +132,7 @@ function setMode(newMode) {
 				
 			upstage = document.getElementsByClassName("uploadStage"); //reset file info
 			for(i=0;i<upstage.length;i++)
-				upstage[i].innerHTML = 'Your photos are being uploaded.';
+				upstage[i].innerHTML = 'Uploading and processing photos. Please wait...';
 		
 			//remove all images from preview modal
 			var imgs = document.getElementsByClassName("previmgdiv");
@@ -257,7 +257,7 @@ document.getElementById("uploadButton").onclick = function() {
 	
 	var upStage = document.getElementsByClassName('uploadStage')
 	for(var i=0;i<upStage.length;i++)
-		upStage[i].innerHTML='Your photos are being uploaded.';
+		upStage[i].innerHTML='Uploading and processing photos. Please wait...';
 		
 	postuploads = document.getElementsByClassName("post_upload"); //reset file info
 			for(i=0;i<postuploads.length;i++)
@@ -291,7 +291,7 @@ for(var i=0; i<modalCloseButtons.length; i++)
 				{
 					xmlUpload.abort();
 					var xmlcancel = new XMLHttpRequest();
-					xmlcancel.open("POST","ajax/cancel.php",false);
+					xmlcancel.open("POST","ajax/cancel.php",true);
 					xmlcancel.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 					xmlcancel.send("id="+projectId);
 					setMode(2);
@@ -345,48 +345,11 @@ function changePic(action) {
 		document.getElementById("instrfeditor").value = '';
 }
 
-//event listener for all image pairs listed near editors
-testpiclinks = document.getElementsByClassName("testpiclink");
-for(i=0;i<testpiclinks.length;i++)
-	testpiclinks[i].onclick = function() {
-		editorId = this.parentNode.parentNode.dataset.id;
-		currentTestPicName = this.querySelector("div").dataset.pic;
-		setTestPic();
-	}
 
-//on clicking on a particular picture, bring it up in the preview carousel
-function setTestPic() {
-	
-	//iterate through uploadedPictures to find index of image clicked on
-	for(var i=0;i < testImgs.length;i++)
-		if("pictures/editors/editor" + editorId + "/" + testImgs[i]==currentTestPicName)
-		{
-			currentTestPic=i; //store index of pic which will be used later to move forward and backward in the carousel
-			break;
-		}
-	document.getElementById("prevtestpic").src = "pictures/tests/" + currentTestPicName;
-	document.getElementById("preveditedpic").src = "pictures/editors/editor"+editorId+"/"+currentTestPicName;
-}
-
-//goes to next pic in preview carousel if action>0 and previous if action<0
-function changeTestPic(action) {
-	if(action > 0)
-		if(currentTestPic >= testImgs.length-1)
-			currentTestPic = 0;
-		else
-			currentTestPic++;
-	if(action < 0)
-		if(currentTestPic <= 0)
-			currentTestPic = testImgs.length - 1;
-		else
-			currentTestPic--;
-	document.getElementById("preveditedpic").src = "pictures/editors/editor"+editorId+"/"+testImgs[currentTestPic];
-	document.getElementById("prevtestpic").src = "pictures/tests/"+testImgs[currentTestPic];
-}
 
 //ajax call to delete an uploaded image by id
 function deleteImage(id) {
-	xmleditor.open("POST","ajax/deleteImage.php",false);
+	xmleditor.open("POST","ajax/deleteImage.php",true);
 	xmleditor.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmleditor.send("id="+id);
 }
@@ -433,17 +396,18 @@ function prevPictures() {
 
 //get 'num' number of editors from the server via ajax. 'not' is the array of id of editors currently on screen so that the server does not include them in the search for new ones
 function getEditors(num) {
-	xmleditor.open("POST","ajax/getEditors.php",false);
+	xmleditor.open("POST","ajax/getEditors.php",true);
 	xmleditor.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xmleditor.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200)	
+			if(xmleditor.responseText!="")
+				addToList(JSON.parse(xmleditor.responseText));
+	}
 	var editors = document.getElementById('editorlist').getElementsByClassName("editor");
 	var not = new Array();
 	for(var j=0;j<editors.length;j++)
 		not[not.length] = editors[j].dataset.id;
 	xmleditor.send("num="+num+"&not[]="+not[0]+"&not[]="+not[1]+"&not[]="+not[2]);
-	if(xmleditor.responseText!="")
-		return JSON.parse(xmleditor.responseText);
-	else
-		return null;
 }
 
 //adds the list of editors to preferences modal
@@ -463,9 +427,9 @@ function addToList(newEditorList) {
 				testpics = editors[j].getElementsByClassName("testpic");
 				for(var k=0;k<testpics.length;k++)
 				{
-					testpics[k].dataset.pic = testImgs[k];
-					testpics[k].querySelector(".test").src="pictures/tests/"+testImgs[k];
-					testpics[k].querySelector(".edited").src="pictures/editors/editor"+editors[j].dataset.id+"/"+testImgs[k];
+					testpics[k].dataset.pic = testImgs[k]['name'];
+					testpics[k].querySelector(".test").src="pictures/tests/"+testImgs[k]['name'];
+					testpics[k].querySelector(".edited").src="pictures/editors/editor"+editors[j].dataset.id+"/thumbs/"+testImgs[k]['name'];
 				}
 				i++;
 			}
@@ -485,9 +449,9 @@ function addToList(newEditorList) {
 					testpics = editors[j].getElementsByClassName("testpic");
 					for(var k=0;k<testpics.length;k++)
 					{
-						testpics[k].dataset.pic = testImgs[k];
-						testpics[k].querySelector(".test").src="pictures/tests/"+testImgs[k];
-						testpics[k].querySelector(".edited").src="pictures/editors/editor"+editors[j].dataset.id+"/"+testImgs[k];
+						testpics[k].dataset.pic = testImgs[k]['name'];
+						testpics[k].querySelector(".test").src="pictures/tests/"+testImgs[k]['name'];
+						testpics[k].querySelector(".edited").src="pictures/editors/editor"+editors[j].dataset.id+"/"+testImgs[k]['name'];
 					}
 					i++;
 				}
@@ -504,7 +468,7 @@ function moreEditors() {
 		if(editors[i].dataset.chosen == "false")
 			count++;
 	}	
-	addToList(getEditors(count));
+	getEditors(count);
 }
 
 //toggle chosen attrubute of a particular editor between true and false and change the star icon accordingl
@@ -556,6 +520,7 @@ function fileSelected() {
 
 //ajax call to start uploading files
 function uploadFile() {
+	getEditors(3);
 	var buttons = document.getElementsByClassName("label_upload"); //hide all select file buttons
 	for(i=0;i<buttons.length;i++)
 		buttons[i].style.display = "none";
@@ -663,7 +628,7 @@ function afterComplete() {
 	fileQueue = null;
 	var upStage = document.getElementsByClassName('uploadStage')
 	for(var i=0;i<upStage.length;i++)
-		upStage[i].innerHTML='Upload completed.<br/>Project submission pending.';
+		upStage[i].innerHTML='Upload completed. Click "Next" to complete submission';
 	
 	document.getElementById("uploadButton2").style.display="none"; //hide upload file button
 	var num = document.getElementsByClassName('progressNumber'); //hide progress bar
@@ -704,19 +669,39 @@ function uploadFailed(evt) {
 function uploadCanceled(evt) {
 	
 }	
-//Get sample images and set onclick to sidplay in carousel
+//Get sample images and set onclick to display in carousel
 xmlsample = new XMLHttpRequest();
-xmlsample.open("GET","ajax/getSampleImages.php",false);
+xmlsample.open("GET","ajax/getSampleImages.php",true);
+xmlsample.onreadystatechange = function() {
+	if(this.readyState == 4 && this.status == 200)
+	{
+		resp = JSON.parse(xmlsample.responseText);
+		basicCarousel.pictures = resp.basic;
+		advancedCarousel.pictures = resp.advanced;
+	}
+}
 xmlsample.send();
-basicPics = JSON.parse(xmlsample.responseText).basic;
-advancedPics = JSON.parse(xmlsample.responseText).advanced;
-basicCarousel = new dualCarousel("photoModal","pictures/sample/basic/before/","name",basicPics,"pictures/sample/basic/after/","name");
-advancedCarousel = new dualCarousel("photoModal1","pictures/sample/advanced/before/","name",advancedPics,"pictures/sample/advanced/after/","name");
+basicCarousel = new dualCarousel("photoModal","pictures/sample/basic/before/","name",null,"pictures/sample/basic/after/","name");
+advancedCarousel = new dualCarousel("photoModal1","pictures/sample/advanced/before/","name",null,"pictures/sample/advanced/after/","name");
+testCarousel = new dualCarousel("photoModal3","pictures/tests/","name",null,"","name");
+xmltest = new XMLHttpRequest();
+xmltest.open("GET","ajax/getTestImages.php",true);
+xmltest.send();
+xmltest.onreadystatechange = function() {
+	if(this.readyState == 4 && this.status == 200)
+	{
+		testImgs = JSON.parse(xmltest.responseText);
+		testCarousel.pictures = testImgs;
+	}
+}
 document.getElementById("photoModal").querySelector(".closeButton").onclick = function() {
 		document.getElementById("photoModal").style.display="none";
 	}
 document.getElementById("photoModal1").querySelector(".closeButton").onclick = function() {
 		document.getElementById("photoModal1").style.display="none";
+	}
+document.getElementById("photoModal3").querySelector(".closeButton").onclick = function() {
+		document.getElementById("photoModal3").style.display="none";
 	}
 	
 document.onkeyup = function(e) {
@@ -738,6 +723,15 @@ document.onkeyup = function(e) {
 		if(e.keyCode==27)
 			document.getElementById("closeButton4").click();
 	}
+	if(document.getElementById("photoModal3").style.display=='block')
+	{
+		if(e.keyCode==37)
+			testCarousel.changePic(-1);
+		if(e.keyCode==39)
+			testCarousel.changePic(1);
+		if(e.keyCode==27)
+			document.getElementById("closeButton5").click();
+	}
 }
 
 document.getElementById("leftButton3").onclick = function() {
@@ -754,6 +748,13 @@ document.getElementById("rightButton4").onclick = function() {
 	advancedCarousel.changePic(1);
 }
 
+document.getElementById("leftButton5").onclick = function() {
+	testCarousel.changePic(-1);
+}
+document.getElementById("rightButton5").onclick = function() {
+	testCarousel.changePic(1);
+}
+
 basicpics = document.getElementsByClassName("basicpics");
 for(i=0;i<basicpics.length;i++)
 	basicpics[i].onclick = function() {
@@ -766,5 +767,10 @@ for(i=0;i<advancedpics.length;i++)
 		advancedCarousel.setPic(this.dataset.pic);	
 	}
 
-//on first run, get new editors and show for giving preferences
-addToList(getEditors(3));
+//event listener for all image pairs listed near editors
+testpiclinks = document.getElementsByClassName("testpic");
+for(i=0;i<testpiclinks.length;i++)
+	testpiclinks[i].onclick = function() {
+		testCarousel.prefix2 = "pictures/editors/editor"+this.parentNode.parentNode.parentNode.dataset.id+"/prev/";
+		testCarousel.setPic(this.dataset.pic);
+	}

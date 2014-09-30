@@ -4,8 +4,8 @@ xmlpics.open("GET","ajax/getAllChosenPictures.php?projId="+projectId,false);
 xmlpics.send();
 origPictures = JSON.parse(xmlpics.responseText).original;
 editPictures = JSON.parse(xmlpics.responseText).edited;
-singleCarousel = new Carousel("photoModal1", "pictures/projects/project" + projectId + "/original/", "name", origPictures);
-editCarousel = new dualCarousel("photoModal", "pictures/projects/project" + projectId + "/original/", "original", editPictures,"pictures/projects/project" + projectId + "/done/", "name");
+singleCarousel = new Carousel("photoModal1", "pictures/projects/project" + projectId + "/original/prev/", "name", origPictures);
+editCarousel = new dualCarousel("photoModal", "pictures/projects/project" + projectId + "/original/prev/", "original", editPictures,"pictures/projects/project" + projectId + "/done/prev/", "name");
 
 //code starting here is to implement preview carousel
 	

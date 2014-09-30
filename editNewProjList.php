@@ -25,9 +25,9 @@
 
 
 	<div id="logobkg">
-	<a href="editor.php">
-	<img id="instr1" src="images/pp5.png" onmouseover="this.src='images/pp6.png'" onmouseout="this.src='images/pp5.png'"/>
-	</a>
+		<a href="editor.php">
+			<img id="instr1" src="images/pp1.png" onmouseover="this.src='images/pp2.png'" onmouseout="this.src='images/pp1.png'"/>
+		</a>
 	</div>
 	 
 	<?php include("editHeader.html");?>
@@ -71,7 +71,7 @@
 			<div class='tableHR'></div>
 			<div id="dummyDiv" style='display:none'>
 				<div class='rowElement'>
-					<div class='col1'><div class='name'>Avinash Singh</div><br/><a class='greenb round-corners customButton1' href="editNewProjView.php" style="text-decoration:none;color:inherit;">Click To View</a></div>
+					<div class='col1'><div class='name'>Avinash Singh</div><a class='greenb round-corners customButton1' href="editNewProjView.php" style="text-decoration:none;color:inherit;">Click To View</a></div>
 					<div class='col2'>29-05-2013</div>
 					<div class='col3'>06-06-2014</div>
 					<div class='col4m'><span class='greenc'>35</span> photos</div>
@@ -89,7 +89,53 @@
 		</div>
 	</div>
 
-	<footer></footer>
+	<div id='footer'>
+					<div id="nav" >
+						<div class='wrap4'>	 
+						<div id="lefter">
+							<nav id='navleft' class="menu" class='wrap4'>
+							<ul class="block-menu">
+								<!--<li class="b1 divider bubble-float-bottom"><a href="#" style="text-decoration: none;">Hire a Photographer</a></li> -->
+								<li class="b1 divider"><a href="about.html" class='three-d' style="text-decoration: none;"><div class='fullheight underflipmenu'>About</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">About</span>
+										<span class="back">About</span>
+									</span>
+								</a></li>
+								<li class="b1 divider"><a href="contact.html" class='three-d' style="text-decoration: none;"><div class=' fullheight underflipmenu'>Contact</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">Contact</span>
+										<span class="back">Contact</span>
+									</span>
+								</a></li>
+								<li class="b1 divider"><a href="faq.html" class='three-d' style="text-decoration: none;"><div class='fullheight underflipmenu'>FAQs</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">FAQs</span>
+										<span class="back">FAQs</span>
+									</span>
+								</a></li>
+								<li class="b1 divider"><a href="privacypolicy.html" class='three-d' style="text-decoration: none;"><div class='fullheight underflipmenu'>Privacy Policy</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">Privacy Policy</span>
+										<span class="back">Privacy Policy</span>
+									</span>
+								</a></li>
+								<li class="b1 divider"><a href="terms.html" class='three-d' style="text-decoration: none;"><div class='fullheight underflipmenu'>Terms and conditions</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">Terms and conditions</span>
+										<span class="back">Terms and conditions</span>
+									</span>
+								</a></li>
+							  <!-- <li class="b1 divider"><a href="editsignin.php" style="text-decoration: none;">Editor(?)</a></li>-->
+							</ul>
+							</nav>
+						</div>
+			
+						</div>
+					</div>
+					<a href='www.photopuddle.com/index.php' class='footerlogo'/></a>
+		 			 <p id="copyright">&copy; PhotoPuddle 2014<p>
+				</div>
 </body>
 <script src='js/editNewProjList.js'></script>
 </html>

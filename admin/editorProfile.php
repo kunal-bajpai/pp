@@ -16,6 +16,11 @@
 		$payout = new Payout();
 		$payout->timestamp = time();
 		$payout->total = $_POST['total'];
+		$payout->bankname = $_POST['bankname'];
+		$payout->ifsc = $_POST['ifsc'];
+		$payout->acname = $_POST['acname'];
+		$payout->txnid = $_POST['txnid'];
+		$payout->acno = $_POST['acno'];
 		$payout->basic_price = BASIC_PRICE;
 		$payout->advanced_price = ADVANCED_PRICE;
 		$payout->save();
@@ -109,6 +114,11 @@
 							<input type='hidden' name='project[]' value='<?php echo $proj->id;?>'/>
 				<?php endforeach;?>
 				<p>Total payout worth Rs. <?php echo $basicDue + $advancedDue;?> /-</p><br/>
+				Bank name <input type='text' name='bankname' value='<?php echo $editor->bankname;?>'/><br/>
+				IFS Code <input type='text' name='ifsc' value='<?php echo $editor->ifsc;?>'/><br/>
+				Payee name <input type='text' name='acname' value='<?php echo $editor->acname;?>'/><br/>
+				A/c no. <input type='text' name='acno' value='<?php echo $editor->acno;?>'/><br/>
+				Transaction ID <input type='text' name='txnid'/><br/>
 				<input type='submit'/>
 			</form>
 			<form method="POST">

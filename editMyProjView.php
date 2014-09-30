@@ -35,12 +35,11 @@
 <body>
 
 	<div id="logobkg">
-	<a href="editor.php">
-	<img id="instr1" src="images/pp5.png" onmouseover="this.src='images/pp6.png'" onmouseout="this.src='images/pp5.png'"/>
-	</a>
+		<a href="editHome.php">
+			<img id="instr1" src="images/pp1.png" onmouseover="this.src='images/pp2.png'" onmouseout="this.src='images/pp1.png'"/>
+		</a>
 	</div>
 	 
-	<?php include("editHeader.html");?>
 
  <div id='mininav' class='wrap3'>
 
@@ -53,82 +52,93 @@
 		</div>
 	</div>
 
-	<div id='wrapper'>
-		<h5 id='wel'><span class='bluec'><?php echo $project->name;?></span></h5>
-		<h5 id='wel'>Project By: <span class='bluec'><?php echo $customer->email;?></span></h5>
-		<h5 id='wel'><span class='bluec'><?php echo ($project->type == 0)?"Basic editing":"Advanced editing";?></span></h5>
-		<h5 id='wel'>Project instructions : <span class='bluec'><?php echo ($project->instructions == '')?"None":$project->instructions;?></span></h5>
-		<div id="projectLog"><?php echo $project->log->show_logs();?></div>
-		<h5 id='head5' class='greenc'>To Edit:</h5>
 
-		<div id='editPicsPreview'>
-		   <?php
-		   		if(is_array($pictures))
-		   			foreach($pictures as $picture):
-		   	?>
-			<div id='imgBox' class='imgBox' data-selected='0' data-id="<?php echo $picture->id;?>">
-				<img id='imgThumb' class='imgThumb' src='<?php echo "pictures/projects/project".$project->id."/original/thumbs/".$picture->name;?>' data-pic='<?php echo $picture->name;?>'>
-				<div id='blackOverlay' class='blackOverlay greenc'>selected</div>
-				<div id='tickSym' class='tickSym greenc'> &#10004;</div>
-				<?php if($project->type == 1 && $picture->instructions!=''):?><div class='instrLabel'> INSTRUCTION GIVEN</div><?php endif;?>
-				<div id='toSelect' class='toSelect greenc'>Select</div>
-				<div id='toUnselect' class='toUnselect greenc'>Unselect</div>
+
+	<?php include("editHeader.html");?>
+	 
+	<div id='wrapper'>
+		<h5 id='wel2'><span class='bluec'><?php echo $project->name;?></span></h5>
+		<h5 id='wel2'>Project By: <span class='bluec'><?php echo $customer->email;?></span></h5>
+		<h5 id='wel2'><span class='bluec'><?php echo ($project->type == 0)?"Basic editing":"Advanced editing";?></span></h5>
+		<h5 id='wel2'>Project instructions : <span class='bluec'><?php echo ($project->instructions == '')?"None":$project->instructions;?></span></h5>
+		<div id="projectLog"><?php echo $project->log->show_logs();?></div>
+
+		<div class='halfpagesec'>
+			<h5 id='head5' class='greenc'>To Edit:</h5>
+
+			<div id='editPicsPreview'>
+			   <?php
+			   		if(is_array($pictures))
+			   			foreach($pictures as $picture):
+			   	?>
+				<div id='imgBox' class='imgBox' data-selected='0' data-id="<?php echo $picture->id;?>">
+					<img id='imgThumb' class='imgThumb' src='<?php echo "pictures/projects/project".$project->id."/original/thumbs/".$picture->name;?>' data-pic='<?php echo $picture->name;?>'>
+					<div id='blackOverlay' class='blackOverlay greenc'>selected</div>
+					<div id='tickSym' class='tickSym greenc'> &#10004;</div>
+					<?php if($project->type == 1 && $picture->instructions!=''):?><div class='instrLabel'> INSTRUCTION GIVEN</div><?php endif;?>
+					<div id='toSelect' class='toSelect greenc'>Select</div>
+					<div id='toUnselect' class='toUnselect greenc'>Unselect</div>
+				</div>
+				<?php endforeach;?>
+				 
+				<div class='clearfix20'></div>
 			</div>
-			<?php endforeach;?>
-			 
+
+			<div id='dwnldButton'>
+				<button id='dwnldButton1' class='blueb round-corners'>Download Selected</button>
+				<button id='dwnldButton2' class='greenb round-corners'>Download All</button>
+			</div>
+
 			<div class='clearfix20'></div>
 		</div>
 
-		<div id='dwnldButton'>
-			<button id='dwnldButton1' class='blueb round-corners'>Download Selected</button>
-			<button id='dwnldButton2' class='greenb round-corners'>Download All</button>
+
+		<div class='halfpagesec'>
+			<h5 id='head5' class='bluec'>Done Editing :</h5>
+
+			<div id='editPicsPreview2'>
+				<div id='imgBox2dummy' style='display:none' class='imgBox2'>
+					<img id='imgThumb2' class='imgThumb2' src='' data-pic=''>
+					<div id='blackOverlay2' class='bluec'>chosen</div>
+					<div id='tickSym2' class='tickSym bluec' onclick=""> &#10008;</div>
+				</div>
+				<?php
+			   		if(is_array($donepics))
+			   			foreach($donepics as $donepic):
+			   	?>
+				<div id='imgBox2' class='imgBox2'>
+					<img id='imgThumb2' class='imgThumb2' src='<?php echo "pictures/projects/project".$project->id."/done/thumbs/".$donepic->name;?>' data-pic='<?php echo $donepic->name;?>'>
+					<?php if($donepic->is_chosen()):?>
+					<div id='blackOverlay2' class='bluec'>chosen</div>
+					<?php elseif($donepic->editor == $session->logged_in_user()->id):?>
+					<div id='tickSym2' class='bluec' onclick="deleteImage(<?php echo $donepic->id;?>);this.parentNode.parentNode.removeChild(this.parentNode);"> &#10008;</div>
+					<?php endif;?>
+				</div>
+				<?php endforeach;?>
+			</div>
+
+			<div id='dwnldButton'>
+				<form id="projectDetails" enctype="multipart/form-data" method="post">
+					<input type="file" form="fileForm" name="fileToUpload[]" id="fileToUpload" accept="image/*" onchange="fileSelected();" multiple style="display:none"/>
+					<input type="hidden" name="projid" id="formProjId"/>
+				</form>
+				<form id="fileForm"></form>
+				<label for="fileToUpload"><div id='pushl' class='blueb round-corners' >Add more pictures</div></label> <button id="dropProject" class="redb">Drop Project</button>
+				<div id="uploaddiv" style="visibility:hidden">
+					
+					<button  class='label_upload2 modalButton blueb round-corners' id="uploadButton2" style="visibility:hidden" onclick="uploadFile()">Upload</button>
+					<div class='post_upload' style="margin-top:10px;"></div>
+				</div>
+				<div class="progressNumber" style='visibility:hidden'>
+					<div class='greenbar' style="width:75%;"></div><div class='bluebar' style='width:25%;'></div>
+					<div class='uploadper'>25<span style='color:#3399CC'>%</span></div>
+
+				</div>
+			</div>
+
+			<div class='clearfix20'></div>
 		</div>
 
-		<div class='clearfix20'></div>
-
-		<h5 id='head5' class='bluec'>Done Editing :</h5>
-
-		<div id='editPicsPreview2'>
-			<div id='imgBox2dummy' style='display:none' class='imgBox2'>
-				<img id='imgThumb2' class='imgThumb2' src='' data-pic=''>
-				<div id='blackOverlay2' class='bluec'>chosen</div>
-				<div id='tickSym2' class='tickSym bluec' onclick=""> &#10008;</div>
-			</div>
-			<?php
-		   		if(is_array($donepics))
-		   			foreach($donepics as $donepic):
-		   	?>
-			<div id='imgBox2' class='imgBox2'>
-				<img id='imgThumb2' class='imgThumb2' src='<?php echo "pictures/projects/project".$project->id."/done/thumbs/".$donepic->name;?>' data-pic='<?php echo $donepic->name;?>'>
-				<?php if($donepic->is_chosen()):?>
-				<div id='blackOverlay2' class='bluec'>chosen</div>
-				<?php elseif($donepic->editor == $session->logged_in_user()->id):?>
-				<div id='tickSym2' class='bluec' onclick="deleteImage(<?php echo $donepic->id;?>);this.parentNode.parentNode.removeChild(this.parentNode);"> &#10008;</div>
-				<?php endif;?>
-			</div>
-			<?php endforeach;?>
-		</div>
-
-		<div id='dwnldButton'>
-			<form id="projectDetails" enctype="multipart/form-data" method="post">
-				<input type="file" form="fileForm" name="fileToUpload[]" id="fileToUpload" accept="image/*" onchange="fileSelected();" multiple style="display:none"/>
-				<input type="hidden" name="projid" id="formProjId"/>
-			</form>
-			<form id="fileForm"></form>
-			<label for="fileToUpload"><div id='pushl' class='blueb round-corners' >Add more pictures</div></label> <button id="dropProject" class="greenb">Drop Project</button>
-			<div id="uploaddiv" style="visibility:hidden">
-				
-				<button  class='label_upload2 modalButton blueb round-corners' id="uploadButton2" style="visibility:hidden" onclick="uploadFile()">Upload</button>
-				<div class='post_upload' style="margin-top:10px;"></div>
-			</div>
-			<div class="progressNumber" style='visibility:hidden'>
-				<div class='greenbar' style="width:75%;"></div><div class='bluebar' style='width:25%;'></div>
-				<div class='uploadper'>25<span style='color:#3399CC'>%</span></div>
-
-			</div>
-		</div>
-
-		<div class='clearfix20'></div>
 	</div>
 		<div style="display:none" id='photoModal1' class='photoModal'>
 			<div  class='fullBlackOverlay'></div>
@@ -151,7 +161,53 @@
                 </div>
         </div>
 		
-	<footer></footer>
+	<div id='footer'>
+					<div id="nav" >
+						<div class='wrap4'>	 
+						<div id="lefter">
+							<nav id='navleft' class="menu" class='wrap4'>
+							<ul class="block-menu">
+								<!--<li class="b1 divider bubble-float-bottom"><a href="#" style="text-decoration: none;">Hire a Photographer</a></li> -->
+								<li class="b1 divider"><a href="about.html" class='three-d' style="text-decoration: none;"><div class='fullheight underflipmenu'>About</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">About</span>
+										<span class="back">About</span>
+									</span>
+								</a></li>
+								<li class="b1 divider"><a href="contact.html" class='three-d' style="text-decoration: none;"><div class=' fullheight underflipmenu'>Contact</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">Contact</span>
+										<span class="back">Contact</span>
+									</span>
+								</a></li>
+								<li class="b1 divider"><a href="faq.html" class='three-d' style="text-decoration: none;"><div class='fullheight underflipmenu'>FAQs</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">FAQs</span>
+										<span class="back">FAQs</span>
+									</span>
+								</a></li>
+								<li class="b1 divider"><a href="privacypolicy.html" class='three-d' style="text-decoration: none;"><div class='fullheight underflipmenu'>Privacy Policy</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">Privacy Policy</span>
+										<span class="back">Privacy Policy</span>
+									</span>
+								</a></li>
+								<li class="b1 divider"><a href="terms.html" class='three-d' style="text-decoration: none;"><div class='fullheight underflipmenu'>Terms and conditions</div>
+									<span aria-hidden="true" class="three-d-box">
+										<span class="front">Terms and conditions</span>
+										<span class="back">Terms and conditions</span>
+									</span>
+								</a></li>
+							  <!-- <li class="b1 divider"><a href="editsignin.php" style="text-decoration: none;">Editor(?)</a></li>-->
+							</ul>
+							</nav>
+						</div>
+			
+						</div>
+					</div>
+					<a href='www.photopuddle.com/index.php' class='footerlogo'/></a>
+		 			 <p id="copyright">&copy; PhotoPuddle 2014<p>
+				</div>
 </body>
 <script src="js/carousel.js"></script>
 <script src="js/dualCarousel.js"></script>

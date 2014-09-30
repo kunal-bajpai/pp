@@ -42,6 +42,21 @@
 		return preg_match('/^(?=[^\._]+[\._]?[^\._]+$)[\w\.]{6,15}$/',$username);
 	}
 	
+	function verify_password($password)
+	{
+		return preg_match('/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,15}$/',$password);
+	}
+
+	function verify_firstname($firstname)
+	{
+		return preg_match('/^[a-zA-Z]+$/',$firstname);
+	}
+
+	function verify_lastname($lastname)
+	{
+		return preg_match('/^[a-zA-Z]+$/',$lastname) || $lastname == '';
+	}
+
 	function mail_on_confirm($customer, $project)
 	{
 		if(file_exists(SITE_ROOT."/mails/onConfirm"))

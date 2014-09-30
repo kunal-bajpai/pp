@@ -17,7 +17,7 @@
 			{
 				$session->login($admin);
 				if(isset($_GET['fwd']))
-					header("location:".url_decode($_GET['fwd']));
+					header("location:".urldecode($_GET['fwd']));
 				else
 					header("location:editorPayList.php");
 			}

@@ -49,14 +49,13 @@
 		<div id="lefter">
 		<ul id='navleft' class="submenu">
 			<li>
-				Undertaken Project Details
+				Undertaken Project Details - <?php echo $project->name;?>
 			</li>
 		</ul>
 		</div>
 	</div>
 
-	<div id='wrapper'>
-		<h5 id='wel'><span class='bluec'><?php echo $project->name;?></span></h5>
+	<div id='wrapper' style='margin-top:60px;'>
 		<h5 id='wel'><span class='bluec'><?php echo ($project->type == 0)?"Basic editing":"Advanced editing"?></span></h5>
 		<h5 class='pushleft'>Who is working on this? <span id="currentEditor"><?php $ed = Editor::find_for($project);echo ($ed==NULL)?"No one":$ed->firstname." ".$ed->lastname." (".$ed->email.")";?></span></h5>
 		<?php if($ed != NULL):?>
@@ -76,7 +75,7 @@
 			   	?>
 				<div id='imgBox' class='imgBox' data-selected='0' data-id="<?php echo $picture->id;?>">
 					<img id='imgThumb' class='imgThumb' src='<?php echo "pictures/projects/project".$project->id."/original/thumbs/".$picture->name;?>' data-pic='<?php echo $picture->name;?>'>
-					<?php if($project->mode == 1 && $picture->instructions!=''):?><div class='instrLabel'> INSTRUCTION GIVEN</div><?php endif;?>
+					<?php if($project->type == 1 && $picture->instructions!=''):?><div class='instrLabel'> INSTRUCTION GIVEN</div><?php endif;?>
 				</div>
 				<?php endforeach;?>
 				 
@@ -115,7 +114,7 @@
 			<div class='fullBlackOverlay'></div>
 
 			<div id='prevPic11' class="modalImg"></div>
-			<?php if($project->mode == 1):?><div class='instrLabel' onmouseover="this.parentNode.querySelector('.instrText').style.visibility='visible';" onmouseout="this.parentNode.querySelector('.instrText').style.visibility='hidden';"> INSTRUCTION GIVEN</div><div class='instrText'></div><?php endif;?>
+			<?php if($project->type == 1):?><div class='instrLabel' onmouseover="this.parentNode.querySelector('.instrText').style.visibility='visible';" onmouseout="this.parentNode.querySelector('.instrText').style.visibility='hidden';"> INSTRUCTION GIVEN</div><div class='instrText'></div><?php endif;?>
 			<div id='closeButton1' class='closeButton bluec'> &times;</div>
 			<div id='leftButton1' class='modalButton bluec'><</div>
 			<div id='rightButton1' class='modalButton bluec'>></div>

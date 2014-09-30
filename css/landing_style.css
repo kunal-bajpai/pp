@@ -1230,7 +1230,7 @@ transform: translate(0%,0);
 
 
 /******************************************************/
-#befdiv,#aftdiv {
+.befdiv,.aftdiv {
 	/*-webkit-box-shadow: inset 0 0 0 200px rgba(176, 218, 212, 0.48);
 	box-shadow: inset 0 0 0 200px rgba(176, 218, 212, 0.48);*/
 	overflow: hidden;
@@ -1252,27 +1252,27 @@ transform: translate(0%,0);
 	position: absolute;
 }
 
-#befdiv{
+.befdiv{
 	opacity:0;
 }
 
-#aftdiv{
+.aftdiv{
 	opacity:1;
 }
 
-.hexagon-in2:hover #befdiv{
+.hexagon-in2:hover .befdiv{
 	opacity:1;
 }
 
-.hexagon-in2:hover #aftdiv{
+.hexagon-in2:hover .aftdiv{
 	opacity:0;
 }
 
 
-.hexagon-in3:hover #befdiv{
+.hexagon-in3:hover .befdiv{
 	opacity:1;
 }
 
-.hexagon-in3:hover #aftdiv{
+.hexagon-in3:hover .aftdiv{
 	opacity:0;
 }
