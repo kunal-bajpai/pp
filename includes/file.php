@@ -71,7 +71,8 @@ class File
 
 	public function is_image()
 	{
-		return $this->check_type("jpg,jpeg,png,gif");
+		$nameArr = explode('.',$this->name);
+		return (count($nameArr) > 1 && in_array(strtoupper(end($nameArr)),Imagick::queryFormats()));
 	}
 	
 	public static function rename_if_exists($filename,$dir)

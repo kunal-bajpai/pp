@@ -7,3 +7,25 @@
 [25-Aug-2014 13:32:02 UTC] PHP Fatal error:  Call to a member function log_action_anon() on a non-object in /home/photopuddle/public_html/ajax/finalise.php on line 25
 [25-Aug-2014 13:35:08 UTC] PHP Notice:  Undefined index: pref in /home/photopuddle/public_html/ajax/finalise.php on line 28
 [26-Aug-2014 17:02:51 UTC] PHP Parse error:  syntax error, unexpected '/' in /home/photopuddle/public_html/includes/functions.php on line 71
+[10-Nov-2014 10:50:34 UTC] PHP Fatal error:  Uncaught exception 'ImagickException' with message 'unable to open image `../pictures/projects/project1/original/abc': No such file or directory @ blob.c/OpenBlob/2480' in /home/photopuddle/public_html/includes/functions.php:168
+Stack trace:
+#0 /home/photopuddle/public_html/includes/functions.php(168): Imagick->__construct('../pictures/pro...')
+#1 /home/photopuddle/public_html/ajax/thumbnailProject.php(10): compress('../pictures/pro...', '../pictures/pro...')
+#2 {main}
+  thrown in /home/photopuddle/public_html/includes/functions.php on line 168
+[10-Nov-2014 10:58:59 UTC] PHP Fatal error:  Uncaught exception 'ImagickException' with message 'unable to open image `../pictures/projects/project201/original/48e8d6e451618e978bc4fb9dbb54eca': No such file or directory @ blob.c/OpenBlob/2480' in /home/photopuddle/public_html/includes/functions.php:168
+Stack trace:
+#0 /home/photopuddle/public_html/includes/functions.php(168): Imagick->__construct('../pictures/pro...')
+#1 /home/photopuddle/public_html/ajax/thumbnailProject.php(10): compress('../pictures/pro...', '../pictures/pro...')
+#2 {main}
+  thrown in /home/photopuddle/public_html/includes/functions.php on line 168
+[12-Nov-2014 09:20:24 UTC] PHP Fatal error:  Using $this when not in object context in /home/photopuddle/public_html/includes/session.php on line 78
+[12-Nov-2014 09:22:27 UTC] PHP Fatal error:  Using $this when not in object context in /home/photopuddle/public_html/includes/session.php on line 78
+[12-Nov-2014 13:16:08 UTC] PHP Fatal error:  Using $this when not in object context in /home/photopuddle/public_html/includes/session.php on line 78
+[12-Nov-2014 15:03:10 UTC] PHP Fatal error:  Using $this when not in object context in /home/photopuddle/public_html/includes/session.php on line 78
+[13-Nov-2014 11:34:11 UTC] PHP Fatal error:  Using $this when not in object context in /home/photopuddle/public_html/includes/session.php on line 78
+[13-Nov-2014 12:28:14 UTC] PHP Notice:  Undefined variable: _SESSION in /home/photopuddle/public_html/ajax/removeEditor.php on line 11
+[13-Nov-2014 14:25:03 UTC] PHP Strict Standards:  Non-static method Session::is_logged_in() should not be called statically in /home/photopuddle/public_html/ajax/logUploadPic.php on line 11
+[13-Nov-2014 14:25:03 UTC] PHP Fatal error:  Using $this when not in object context in /home/photopuddle/public_html/includes/session.php on line 78
+[13-Nov-2014 14:26:59 UTC] PHP Strict Standards:  Non-static method Session::is_logged_in() should not be called statically in /home/photopuddle/public_html/ajax/logUploadPic.php on line 11
+[13-Nov-2014 14:26:59 UTC] PHP Fatal error:  Using $this when not in object context in /home/photopuddle/public_html/includes/session.php on line 78

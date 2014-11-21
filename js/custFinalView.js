@@ -13,7 +13,7 @@ imgdivs = document.getElementsByClassName("imgThumb");
 for(var i=0;i<imgdivs.length;i++)
 	imgdivs[i].onclick = function() {
 		singleCarousel.setPic(this.dataset.pic);
-		document.body.style.overflow = 'hidden';
+		document.documentElement.style.overflowY = 'hidden';
 		document.getElementById("photoModal1").style.display="block";
 		document.getElementsByClassName("fullBlackOverlay")[0].style.display="block";
 	}
@@ -43,7 +43,7 @@ imgdivs = document.getElementsByClassName("imgThumb2");
 for(var i=0;i<imgdivs.length;i++)
 	imgdivs[i].onclick = function() {
 		editCarousel.setPic(this.dataset.pic);
-		document.body.style.overflow = 'hidden';
+		document.documentElement.style.overflowY = 'hidden';
 		document.getElementById("photoModal2").style.display="block";
 		document.getElementsByClassName("fullBlackOverlay")[0].style.display="block";
 	}

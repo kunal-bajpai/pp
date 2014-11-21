@@ -1,6 +1,8 @@
 <?php
 	require_once("includes/init.php");
 	cust_logout();
+	if(Session::get_instance()->is_logged_in())
+		header("location:editMyProjList.php");
 	$incUsername = false;
 	$incPassword = false;
 	$unverified = false;
@@ -35,8 +37,6 @@
 			echo $incUsername = true;
 	if(isset($_GET['verified']))
 		echo "Account verified. You may now login.";
-	if(Session::get_instance()->is_logged_in())
-		header("location:editMyProjList.php");
 ?>
  <!DOCTYPE html>
 
@@ -181,12 +181,17 @@
 			mkdir(SITE_ROOT.'/pictures/editors/editor'.$editor->id);
 			mkdir(SITE_ROOT.'/pictures/editors/editor'.$editor->id.'/prev');
 			mkdir(SITE_ROOT.'/pictures/editors/editor'.$editor->id.'/thumbs');
-			foreach($tests as $test) //save test files
-			{
+			foreach($tests as $test): //save test files
+				if(!$test->is_image())
+					continue;
 				$test->save_file_in(SITE_ROOT.'/pictures/editors/editor'.$editor->id.'/');
-				compress(SITE_ROOT.'/pictures/editors/editor'.$editor->id.'/'.$test->name, SITE_ROOT.'/pictures/editors/editor'.$editor->id.'/prev/'.$test->name);
-				thumbnail(SITE_ROOT.'/pictures/editors/editor'.$editor->id.'/prev/'.$test->name, SITE_ROOT.'/pictures/editors/editor'.$editor->id.'/thumbs/'.$test->name);
-			}
+				?>
+	<script>
+		var xmlthumb = new XMLHttpRequest();
+		xmlthumb.open("GET","ajax/thumbTest.php?editorId=<?php echo $editor->id;?>&name=<?php echo $test->name;?>",true);
+		xmlthumb.send();
+	</script><?php
+			endforeach;
 		}
 		else
 			echo $msg." Please sign up again.";

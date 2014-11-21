@@ -47,7 +47,26 @@
 
 	</div> 
 	
-	<?php include("editHeader.html");?>	
+	<div id="nav" style='z-index:1; >
+		<div class='wrap4'>	 
+		<div id="lefter">
+		<nav id='navleft' class="menuhead" class='wrap4'>
+		<ul>
+			<li class="b1 active"><a href="editMyProjList.php" style="text-decoration: none;">My Projects</a></li>
+			<li class="b1 "><a href="editNewProjList.php" style="text-decoration:none;">New Projects</a></li>
+			<li class="b1 "><a href="#" style="text-decoration: none;">Profile</a></li>
+			<li class="b1 "><a href="editTakeTest.php" style="text-decoration: none;">Re-take Test</a></li>
+			<li class="b1 "><a href="editLogout.php" style="text-decoration: none;">Logout</a></li>
+		</ul>
+		</nav>
+		</div>
+
+		<div id="righter">
+		   <ul id='navright' class="menu"></ul>
+		</div>
+
+		</div>
+	</div>
 
 	<div id='wrapper'>
 		<h5 id='wel'>Welcome <span class='greenc'><?php echo $session->logged_in_user()->firstname.'!';?></span></h5>
@@ -59,7 +78,7 @@
 		<input type='radio' name='projCategory' id='removed' class='projCategory'><label for='removed'>Removed</label>
 		<input type='radio' name='projCategory' id='cancelled' class='projCategory'><label for='cancelled'>Cancelled</label>
 	</div>
-		<div id='ongoingProj'>
+		<div id='ongoingProj' class='wrapper80'>
 			<div id='rowHeader' class='bluec'>
 				<div>Project</div>
 				<div>Taken on</div>
@@ -82,7 +101,7 @@
 		</div>
 	
 	
-	<div id='droppedProj' style='display:none'>
+	<div id='droppedProj' class='wrapper80' style='display:none'>
 			<div id='rowHeader' class='bluec'>
 				<div>Project</div>
 				<div>Taken up</div>
@@ -105,7 +124,7 @@
 		</div>
 	
 	
-	<div id='failedProj' style='display:none'>
+	<div id='failedProj' class='wrapper80' style='display:none'>
 			<div id='rowHeader' class='bluec'>
 				<div>Project</div>
 				<div>Taken up</div>
@@ -128,7 +147,7 @@
 		</div>
 	
 	
-	<div id='completedProj' style='display:none'>
+	<div id='completedProj' class='wrapper80'  style='display:none'>
 			<div id='rowHeader' class='bluec'>
 				<div>Project</div>
 				<div>Taken up</div>
@@ -151,7 +170,7 @@
 		</div>
 	
 	
-	<div id='removedProj' style='display:none'>
+	<div id='removedProj' class='wrapper80' style='display:none'>
 			<div id='rowHeader' class='bluec'>
 				<div>Project</div>
 				<div>Taken up</div>
@@ -173,7 +192,7 @@
 
 		</div>
 		
-		<div id='cancelledProj' style='display:none'>
+		<div id='cancelledProj' class='wrapper80' style='display:none'>
 			<div id='rowHeader' class='bluec'>
 				<div>Project</div>
 				<div>Taken up</div>

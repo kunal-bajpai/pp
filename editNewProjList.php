@@ -30,7 +30,26 @@
 		</a>
 	</div>
 	 
-	<?php include("editHeader.html");?>
+	<div id="nav" style='z-index:1; >
+		<div class='wrap4'>	 
+		<div id="lefter">
+		<nav id='navleft' class="menuhead" class='wrap4'>
+		<ul>
+			<li class="b1 "><a href="editMyProjList.php" style="text-decoration: none;">My Projects</a></li>
+			<li class="b1 active"><a href="editNewProjList.php" style="text-decoration:none;">New Projects</a></li>
+			<li class="b1 "><a href="#" style="text-decoration: none;">Profile</a></li>
+			<li class="b1 "><a href="editTakeTest.php" style="text-decoration: none;">Re-take Test</a></li>
+			<li class="b1 "><a href="editLogout.php" style="text-decoration: none;">Logout</a></li>
+		</ul>
+		</nav>
+		</div>
+
+		<div id="righter">
+		   <ul id='navright' class="menu"></ul>
+		</div>
+
+		</div>
+	</div>
 
  <div id='mininav' class='wrap3'>
 
@@ -60,7 +79,7 @@
 			<p class="refreshing"></p>
 		</div>
 
-		<div id='editorTable'>
+		<div id='editorTable' class='wrapper80'>
 			<div id='rowHeader' class='bluec'>
 				<div>Project By</div>
 				<div>Uploaded on</div>

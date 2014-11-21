@@ -27,42 +27,62 @@
 <body>
 
 	<div id="logobkg">
-	<a href="editor.php">
-	<img id="instr1" src="images/pp5.png" onmouseover="this.src='images/pp6.png'" onmouseout="this.src='images/pp5.png'"/>
-	</a>
+		<a href="editor.php">
+			<img id="instr1" src="images/pp1.png" onmouseover="this.src='images/pp2.png'" onmouseout="this.src='images/pp1.png'"/>
+		</a>
 	</div>
 	 
-	<?php include("editHeader.html");?>  
+	<div id="nav" style='z-index:1;' >
+		<div class='wrap4'>	 
+		<div id="lefter">
+		<nav id='navleft' class="menuhead" class='wrap4'>
+		<ul>
+			<li class="b1 "><a href="editMyProjList.php" style="text-decoration: none;">My Projects</a></li>
+			<li class="b1 active"><a href="editNewProjList.php" style="text-decoration:none;">New Projects</a></li>
+			<li class="b1 "><a href="#" style="text-decoration: none;">Profile</a></li>
+			<li class="b1 "><a href="editTakeTest.php" style="text-decoration: none;">Re-take Test</a></li>
+			<li class="b1 "><a href="editLogout.php" style="text-decoration: none;">Logout</a></li>
+		</ul>
+		</nav>
+		</div>
+
+		<div id="righter">
+		   <ul id='navright' class="menu"></ul>
+		</div>
+
+		</div>
+	</div>
 
  <div id='mininav' class='wrap3'>
 
 		<div id="lefter">
 		<ul id='navleft' class="submenu">
 			<li>
-				New&nbsp;Project&nbsp;Details&nbsp;
+				Editor &nbsp;Account&nbsp;
 			</li>
 
 		</ul>
 		</div>
 
 	</div>
+
 	<div id='wrapper'>
 		<h5 id='wel'><span class='bluec'><?php echo $project->name;?></span></h5>
 		<h5 id='wel'>Project By: <span class='bluec'><?php echo $customer->email;?></span></h5>
-		<h5 id='wel'><span class='bluec'><?php echo ($project->type == 0)?"Basic editing":"Advanced editing"?></span></h5>
+		<h5 id='wel'><span class='bluec text-bold'><?php echo ($project->type == 0)?"Basic editing":"Advanced editing"?></span></h5>
 		<h5 id='wel'>Project instructions : <span class='bluec'><?php echo ($project->instructions == '')?"None":$project->instructions;?></span></h5>
 	
 	
-	   <h5 id='head5' class='greenc'>To Edit:</h5>
+	   <h5 id='head5' class='greenc' style='margin-left:50px;'>To Edit:</h5>
 
-		<div id='editPicsPreview'>
+		<div id='editPicsPreview' style='border:2px solid rgba(20, 20, 20, 0.25); width:80%;'>
 			<?php
 				if(!$project->is_free())
 					die("Project taken");
 				if(is_array($pictures))
 					foreach($pictures as $picture):?>
 			<div id='imgBox' class='imgBox'>
-				<img id='imgThumb' class='imgThumb' data-pic='<?php echo $picture->name;?>' src='<?php echo "pictures/projects/project".$_GET['id']."/original/thumbs/".$picture->name;?>'>
+				<div id='imgThumb' class='imgThumb' data-pic='<?php echo $picture->name;?>' style='background-image:url(<?php echo "pictures/projects/project".$_GET['id']."/original/thumbs/".$picture->name;?>)'></div>
 				<div id='blackOverlay' class='blackOverlay greenc'>selected</div>
 				<div id='tickSym' class='tickSym greenc'> &#10004;</div>
 				<?php if($project->type == 1 && $picture->instructions!=''):?><div class='instrLabel'> INSTRUCTION GIVEN</div><?php endif;?>
@@ -83,8 +103,8 @@
 	
 	<div id='photoModal1' style="display:none">
 		<div id="fullOverlay" class='fullBlackOverlay'></div>
-		<div id='prevpic' class='modalImg'></div>
-		<?php if($project->type == 1):?><div class='instrLabel' onmouseover="this.parentNode.querySelector('.instrText').style.visibility='visible';" onmouseout="this.parentNode.querySelector('.instrText').style.visibility='hidden';"> INSTRUCTION GIVEN</div><p class='instrText'></p><?php endif;?>
+		<div id='prevpic' class='modalImg fixthisimg'></div>
+		<?php if($project->type == 1):?><div class='instrLabel'></div><?php endif;?>
 		<div id='closeButton1' class='closeButton bluec'> &times;</div>
 		<div id='leftButton1' class='bluec'><</div>
 		<div id='rightButton1' class='bluec'>></div>

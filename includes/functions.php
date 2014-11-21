@@ -105,7 +105,7 @@
 					if(session_id() === '')
 						session_start();
 		}
-		if($_SESSION['custSess'] != $project->checkcode)
+		if(!isset($_SESSION['custSess']) || $_SESSION['custSess'] != $project->checkcode)
 			die("Unauthorised access. Please use the link and password sent to your email to login.");
 	}
 	

@@ -18,8 +18,6 @@
 		$project->name = $_POST['name'];
 		$project->submittime = time();
 		$project->type = $_POST['mode'];
-		$project->password = projectPassword();
-		$project->checkcode = checkCode();
 		$project->customer = $customer->id;
 		$project->instructions = $_POST['instructions'];
 		$project->save();
@@ -36,25 +34,12 @@
 	if(is_array($files))
 		foreach($files as $file)
 		{
-			//if(!$file->is_image())
-				//continue;
-			try
-			{
-				$im = new imagick($file->tmp_name);
-				$im->destroy();
-			}
-			catch(Exception $e)
-			{
+			if(!$file->is_image())
 				continue;
-			}
 			$nameArr = explode('.',$file->name);
 			$picture = new Picture();
 			$picture->project = $project->id;
-
-			if(count($nameArr) > 1)
-				$picture->ext = end($nameArr);
-			else
-				continue;
+			$picture->ext = end($nameArr);
 			$picture->prefix = prefix();
 			$file->name = hashText($picture->prefix."Picture".$picture->id);
 			$picture->name = $file->name;
@@ -63,16 +48,8 @@
 			$fileDet['name']=$file->name;
 			$fileDet['id']=$picture->id;
 			$fileDets[] = $fileDet;
-			if(!is_dir(UPLOAD_DIR."projects/project".$project->id."/original/thumbs/"))
-				mkdir(UPLOAD_DIR."projects/project".$project->id."/original/thumbs/",0777,true);
-			if(!is_dir(UPLOAD_DIR."projects/project".$project->id."/original/prev/"))
-				mkdir(UPLOAD_DIR."projects/project".$project->id."/original/prev/",0777,true);	
-			compress(UPLOAD_DIR."projects/project".$project->id."/original/".$picture->name,UPLOAD_DIR."projects/project".$project->id."/original/prev/".$picture->name);
-			thumbnail(UPLOAD_DIR."projects/project".$project->id."/original/prev/".$picture->name,UPLOAD_DIR."projects/project".$project->id."/original/thumbs/".$picture->name);
 		}
 	$resultObject['projectId'] = $project->id;
-	$resultObject['projectPass'] = $project->password;
-	$resultObject['projectCheck'] = $project->checkcode;
 	if(isset($fileDets))
 		$resultObject['files'] = $fileDets;
 	else

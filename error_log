@@ -161,3 +161,19 @@
 [26-Sep-2014 11:30:55 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 93
 [27-Sep-2014 14:30:47 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 93
 [27-Sep-2014 14:30:53 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 93
+[12-Nov-2014 07:42:21 UTC] PHP Notice:  Undefined index: id in /home/photopuddle/public_html/custProjView.php on line 4
+[12-Nov-2014 07:43:11 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[12-Nov-2014 07:54:20 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[12-Nov-2014 07:55:54 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[12-Nov-2014 07:55:58 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[12-Nov-2014 07:56:02 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[12-Nov-2014 07:56:05 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[12-Nov-2014 07:56:57 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[12-Nov-2014 07:56:57 UTC] PHP Notice:  Trying to get property of non-object in /home/photopuddle/public_html/includes/functions.php on line 108
+[12-Nov-2014 07:56:57 UTC] PHP Notice:  Trying to get property of non-object in /home/photopuddle/public_html/includes/picture.php on line 7
+[12-Nov-2014 07:56:57 UTC] PHP Notice:  Trying to get property of non-object in /home/photopuddle/public_html/includes/donepic.php on line 8
+[12-Nov-2014 07:56:57 UTC] PHP Notice:  Trying to get property of non-object in /home/photopuddle/public_html/custProjView.php on line 8
+[12-Nov-2014 07:56:59 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[13-Nov-2014 13:41:31 UTC] PHP Notice:  Undefined index: custSess in /home/photopuddle/public_html/includes/functions.php on line 108
+[14-Nov-2014 15:52:53 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/photopuddle/public_html/includes/file.php on line 76
+[14-Nov-2014 15:54:00 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/photopuddle/public_html/includes/file.php on line 76

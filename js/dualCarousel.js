@@ -10,7 +10,7 @@ function dualCarousel(modal, prefix, name, pictures, prefix2, name2) {
 	this.prefix2 = prefix2;
 
 	document.getElementById(modal).querySelector(".closeButton").onclick = function() {
-		document.body.style.overflow = "auto";
+		document.documentElement.style.overflowY = "scroll";
 		document.getElementById(modal).style.display="none";
 	}
 

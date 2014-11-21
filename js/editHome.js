@@ -13,7 +13,6 @@ var stage = 1, //stores current stage in which the process of project creation i
 	testImgs, //test images
 	uploadedPictures, //array of names of all uploaded pictures
 	projectId=0, //project id received from server. 0 means project not added to db yet
-	projectPass, //password for the customer to log in to custSignin.php
 	projectCheck, //checkcode for accessing customer account
 	uploadStart = false, //flag to check if upload has started
 	uploadComp = false, //flag to check if upload has completed
@@ -70,6 +69,7 @@ function setMode(newMode) {
 				elems[i].innerHTML = "Basic";
 				elems[i].className = "largermodalhead greenc";
 			}
+			document.getElementById("subtxt1").style.display = 'none';
 			elems = document.getElementsByClassName("smallermodalhead");
 			for(i=0;i<elems.length;i++)
 				elems[i].className = "smallermodalhead greenc";
@@ -84,6 +84,7 @@ function setMode(newMode) {
 				elems[i].innerHTML = "Advanced";
 				elems[i].className = "largermodalhead bluec";
 			}
+			document.getElementById("subtxt1").style.display = 'block';
 			elems = document.getElementsByClassName("smallermodalhead");
 			for(i=0;i<elems.length;i++)
 				elems[i].className = "smallermodalhead bluec";
@@ -100,8 +101,6 @@ function setMode(newMode) {
 			projectId = 0;
 			projectCheck = null;
 			projectPass = null;
-			document.getElementById("link").href = '';
-			document.getElementById("pass").innerHTML = '';
 			uploadStart = false;
 			uploadComp = false;
 			uploadedPictures = null;
@@ -132,7 +131,7 @@ function setMode(newMode) {
 				
 			upstage = document.getElementsByClassName("uploadStage"); //reset file info
 			for(i=0;i<upstage.length;i++)
-				upstage[i].innerHTML = 'Uploading and processing photos. Please wait...';
+				upstage[i].innerHTML = 'Uploading and processing photos...';
 		
 			//remove all images from preview modal
 			var imgs = document.getElementsByClassName("previmgdiv");
@@ -216,8 +215,6 @@ document.getElementById("previewButton").onclick = function() {
 document.getElementById("summaryButton").onclick = function() {
 	document.getElementById("summhead").querySelector("input").value = projectName;
 	document.getElementById("summl").innerHTML = "<span>Project No</span> "+projectId;
-	document.getElementById("link").href = "http://www.photopuddle.com/custSignin.php?projId="+projectId+"&check="+projectCheck;
-	document.getElementById("pass").innerHTML = projectPass;
 	document.getElementById("summr").querySelector("input").value = email;
 	document.getElementById("summc").querySelector("span").innerHTML = uploadedPictures.length;
 	document.getElementById("finprojinstrfeditor").value = projInstr;
@@ -257,7 +254,7 @@ document.getElementById("uploadButton").onclick = function() {
 	
 	var upStage = document.getElementsByClassName('uploadStage')
 	for(var i=0;i<upStage.length;i++)
-		upStage[i].innerHTML='Uploading and processing photos. Please wait...';
+		upStage[i].innerHTML='Uploading and processing photos...';
 		
 	postuploads = document.getElementsByClassName("post_upload"); //reset file info
 			for(i=0;i<postuploads.length;i++)
@@ -313,7 +310,7 @@ function setPic() {
 			currentPic=i; //store index of pic which will be used later to move forward and backward in the carousel
 			break;
 		}
-	document.getElementById("prevpic").src = "pictures/projects/project" + projectId + "/original/prev/" + currentPicName;
+	document.getElementById("prevpic").style.backgroundImage = "url(pictures/projects/project" + projectId + "/original/prev/" + currentPicName + ')';
 	
 	//load instruction for that image if specified earlier
 	document.getElementById("instrfeditor").value = '';
@@ -335,7 +332,7 @@ function changePic(action) {
 			currentPic = uploadedPictures.length - 1;
 		else
 			currentPic--;
-	document.getElementById("prevpic").src = "pictures/projects/project" + projectId + "/original/" + uploadedPictures[currentPic]['name'];
+	document.getElementById("prevpic").style.backgroundImage = "pictures/projects/project" + projectId + "/original/" + uploadedPictures[currentPic]['name'];
 	
 	//load instruction for that image if specified earlier
 	document.getElementById("instrfeditor").value = '';
@@ -559,7 +556,7 @@ function upload() {
 	xmlUpload = new XMLHttpRequest();
 	xmlUpload.upload.addEventListener("progress", uploadProgress, false);
 	xmlUpload.addEventListener("load", uploadComplete, false);
-	xmlUpload.addEventListener("error", uploadFailed, false);
+	xmlUpload.addEventListener("error", uploadComplete, false);
 	xmlUpload.addEventListener("abort", uploadCanceled, false);
 	/* Be sure to change the url below to the url of your upload server side script */
 	xmlUpload.open("POST", "ajax/upload.php");
@@ -569,6 +566,12 @@ function upload() {
 function uploadProgress(evt) {
 	if (evt.lengthComputable) {
 		var percentComplete = Math.round((currentFile + (evt.loaded / evt.total)) * 100 / fileQueue.length);
+		if(percentComplete == 100)
+		{
+			upstage = document.getElementsByClassName("uploadStage"); //reset file info
+			for(i=0;i<upstage.length;i++)
+				upstage[i].innerHTML = 'Thumbnailing and previewing. Please wait...';
+		}
 		//set upload progress in the bars
 		divs = document.getElementsByClassName('progressNumber');
 		for(var i=0;i<divs.length;i++)
@@ -602,6 +605,19 @@ function uploadComplete(evt) {
 		projectId = resp.projectId; //update project id
 		projectPass = resp.projectPass;
 		projectCheck = resp.projectCheck;
+		i = uploadedPictures.length - 1;
+		uploadedPictures[i].xhr = new XMLHttpRequest();
+		uploadedPictures[i].xhr.open("GET","ajax/thumbnailProject.php?id="+projectId+"&name="+resp.files[0].name,true);
+		uploadedPictures[i].xhr.onreadystatechange = function() {
+			if(this.readyState == 4 && this.status == 200)
+			{
+				divs = document.getElementsByClassName("previmgdiv");
+				for(j=0;j<divs.length;j++)
+					if(divs[j].querySelector("img").dataset.pic == this.responseText)
+						divs[j].querySelector("img").src = divs[j].querySelector("img").src;
+			}
+		}
+		uploadedPictures[i].xhr.send();
 	}
 	catch(e)
 	{
@@ -656,7 +672,7 @@ function afterComplete() {
 }
 
 function uploadFailed(evt) {
-	alert("There was an error attempting to upload the file. Please ensure that files are iamges.");
+	alert("There was an error attempting to upload the file. Please ensure that files are images.");
 	if(window.location.hash=="#basic-imagesprev")
 		afterComplete();
 	else

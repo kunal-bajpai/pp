@@ -5,7 +5,7 @@ function Carousel(modal, prefix, name, pictures) {
 	this.pictures = pictures;
 
 	document.getElementById(modal).querySelector(".closeButton").onclick = function() {
-		document.body.style.overflow = "auto";
+		document.documentElement.style.overflowY = "scroll";
 		document.getElementById(modal).style.display="none";
 	}
 
@@ -22,10 +22,10 @@ Carousel.prototype.setPic = function(newPicName) {
 			break;
 		}
 	this.modal.querySelector(".modalImg").style.backgroundImage = 'url('+this.prefix + this.pictures[this.currentPic][this.name]+')';
-	if(this.modal.querySelector(".instrText")!=null)
-		this.modal.querySelector(".instrText").innerHTML = null;
+	if(this.modal.querySelector(".instrLabel")!=null)
+		this.modal.querySelector(".instrLabel").innerHTML = null;
 	if(this.pictures[this.currentPic]['instructions']!=undefined)
-		this.modal.querySelector(".instrText").innerHTML = this.pictures[this.currentPic]['instructions'];
+		this.modal.querySelector(".instrLabel").innerHTML = this.pictures[this.currentPic]['instructions'];
 }
 	
 	//goes to next pic in preview carousel if action>0 and previous if action<0

@@ -1,5 +1,4 @@
 <?php
-	error_reporting(E_ALL);
 	require_once("includes/init.php");
 	$project = Project::find_by_id($_GET['id']);
 	cust_require_login($project);
@@ -32,6 +31,12 @@
 
 <script>
 	var projectId = <?php echo $_GET['id'];?>;
+	var selectCount = <?php if(is_array($donepics))
+			$tot = 0;
+			foreach($donepics as $dp)
+				if($dp->chosen==1)
+					$tot++;
+			echo $tot;?>;
 </script>
 
 <body>
@@ -55,16 +60,28 @@
 		</div>
 	</div>
 
-	<div id='wrapper' style='margin-top:60px;'>
-		<h5 id='wel'><span class='bluec'><?php echo ($project->type == 0)?"Basic editing":"Advanced editing"?></span></h5>
-		<h5 class='pushleft'>Who is working on this? <span id="currentEditor"><?php $ed = Editor::find_for($project);echo ($ed==NULL)?"No one":$ed->firstname." ".$ed->lastname." (".$ed->email.")";?></span></h5>
+	<div id='wrapper' style='margin-top:80px;'>
+		<h5 id='wel'><span class='bluec '><?php echo ($project->type == 0)?"Basic editing":"Advanced editing"?></span></h5>
+		<h5 class='pushleft' style='display:inline;'>Who is working on this? <span id="currentEditor" class="bluec text-bold"><?php $ed = Editor::find_for($project);echo ($ed==NULL)?"No one":$ed->firstname." ".$ed->lastname;?></span></h5>
 		<?php if($ed != NULL):?>
-		<button id="removeEditor">Remove editor</button>
+<div>Unhappy with the photos? Too slow to edit?</div>
+<button class='toggleeditor' style='margin-left:10px' id="removeEditor">Remove editor</button><div class='ibox'>Bans editor from taking up this project and opens it up for other editors. Photos edited by this editor will still be available for you to pick.</div>
 		<?php endif;?>
+		<div class='clearfix20'></div>
 		<h5 class='pushleft'>Project instructions : <span class='bluec'><?php echo ($project->instructions == '')?"None":$project->instructions;?></span></h5>
-		<div class='togglelog pushleft'>Show Log</div>
+		<div class='togglelog pushleft'>Project history</div>
 		<div id="projectLog" class='pushleft'><?php echo $project->log->show_logs();?></div>
 		
+	<div class='twobutton'>
+		<?php if(is_array($donepics) && count($donepics)>0):?>
+		<div><b>Like the photos so far and want more?</b> Please "select" the photos you like to let the editor know. Your preferences will be saved. You may login later to check for new photos.<br/><b>Got what you wanted?</b> Just "select" the photos you want to pay for and proceed to payment.</div>
+		<?php else:?>
+		<div>Please wait for some photos to be uploaded. We will let you know by email as soon as they are.</div>
+		<?php endif;?>
+		<button onclick="if(selectCount==0) alert('Please select the pictures you want to pay for.'); else window.location.href='custSummary.php?id=<?php echo $project->id;?>'" class='greenb buttonset1'>Proceed to payment</button>
+		<button id="cancelProject" class='redb buttonset1'>Cancel Project</button>
+	</div>
+	
 		<div class='halfpagesec'>
 			<h5 id='head5' class='greenc'>Original</h5>
 
@@ -74,8 +91,8 @@
 			   			foreach($pictures as $picture):
 			   	?>
 				<div id='imgBox' class='imgBox' data-selected='0' data-id="<?php echo $picture->id;?>">
-					<img id='imgThumb' class='imgThumb' src='<?php echo "pictures/projects/project".$project->id."/original/thumbs/".$picture->name;?>' data-pic='<?php echo $picture->name;?>'>
-					<?php if($project->type == 1 && $picture->instructions!=''):?><div class='instrLabel'> INSTRUCTION GIVEN</div><?php endif;?>
+					<div id='imgThumb' class='imgThumb' style='background-image:url(<?php echo "pictures/projects/project".$project->id."/original/thumbs/".$picture->name;?>)' data-pic='<?php echo $picture->name;?>'></div>
+					<?php if($project->type == 1 && $picture->instructions!=''):?><div class='instrLabel'>INSTRUCTION GIVEN</div><?php endif;?>
 				</div>
 				<?php endforeach;?>
 				 
@@ -93,8 +110,8 @@
 			   			foreach($donepics as $donepic):
 			   	?>
 				<div id='imgBox2' class='imgBox2' data-selected='<?php echo $donepic->chosen;?>' data-id='<?php echo $donepic->id;?>'>
-					<img id='imgThumb2' class='imgThumb2' src='<?php echo "pictures/projects/project".$project->id."/wm/thumbs/".$donepic->wmName();?>' data-pic='<?php echo $donepic->wmName();?>'>>
-					<div id='blackOverlay' <?php if($donepic->chosen==1) {echo 'style="display:inline"';}?> class='blackOverlay greenc'>selected</div>
+					<div id='imgThumb2' class='imgThumb2' style='background-image:url(<?php echo "pictures/projects/project".$project->id."/wm/thumbs/".$donepic->wmName();?>)' data-pic='<?php echo $donepic->wmName();?>'></div>
+					<div id='blackOverlay' <?php if($donepic->chosen==1) {echo 'style="display:block; height:100%; position:absolute; top:0; left:0; width:100%"';}?> class='blackOverlay greenc'>selected</div>
 					<div id='tickSym' <?php if($donepic->chosen==1) {echo 'style="display:inline"';}?> class='tickSym greenc'> &#10004;</div>
 					<div id='toSelect' <?php if($donepic->chosen==0) {echo 'style="display:block"';}?> class='toSelect greenc'>Select</div>
 					<div id='toUnselect' <?php if($donepic->chosen==1) {echo 'style="display:block"';}?> class='toUnselect greenc'>Unselect</div>
@@ -105,16 +122,13 @@
 
 		<div class='clearfix20'></div>
 
-		<button onclick="window.location.href='ccavRequestHandler.php?projId=<?php echo $project->id;?>'" class='greenb buttonset1'>Proceed to payment</button>
-		<button id="cancelProject" class='redb buttonset1'>Cancel Project</button>
-		<div class='clearfix20'></div>
 
 		
 		<div id='photoModal1' class='photoModal' style="display:none">
 			<div class='fullBlackOverlay'></div>
 
-			<div id='prevPic11' class="modalImg"></div>
-			<?php if($project->type == 1):?><div class='instrLabel' onmouseover="this.parentNode.querySelector('.instrText').style.visibility='visible';" onmouseout="this.parentNode.querySelector('.instrText').style.visibility='hidden';"> INSTRUCTION GIVEN</div><div class='instrText'></div><?php endif;?>
+			<div id='prevPic11' class="modalImg fixthisimg"></div>
+			<?php if($project->type == 1):?><div class='instrLabel' ></div><?php endif;?>
 			<div id='closeButton1' class='closeButton bluec'> &times;</div>
 			<div id='leftButton1' class='modalButton bluec'><</div>
 			<div id='rightButton1' class='modalButton bluec'>></div>

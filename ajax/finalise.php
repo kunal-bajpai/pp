@@ -20,6 +20,8 @@
 			$project->customer = $customer->id;
 			$project->name = $_POST['name'];
 			$project->instructions = $_POST['instructions'];
+			$project->password = projectPassword();
+			$project->checkcode = checkCode();
 			$project->status = 1;
 			$project->save();
 			$project->log->log_action_anon("Project created");

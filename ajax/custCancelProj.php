@@ -1,5 +1,6 @@
 <?php
 	require_once("../includes/init.php");
+	session_start();
 	if(isset($_POST['id']))
 	{
 		$project = Project::find_by_id($_POST['id']);

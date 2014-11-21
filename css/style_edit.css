@@ -1037,6 +1037,7 @@ header h2{
 
 .modal-inner{
 	font-size: 20px;
+	overflow-y:hidden !important;
 }
 
 #basic-upload-photos .modal-content{
@@ -1088,7 +1089,7 @@ background-color: #ffffff;
 	position: relative;
 	font-size: 20px;
 	margin:auto;
-	margin-top: 30px;
+	margin-top: 0px;
 	margin-bottom: 0;
 	border: 3px solid rgba(0,0,0,0.1);
 
@@ -1119,8 +1120,8 @@ background-color: #ffffff;
 	text-align: center;
 	color:#3399CC;
 	text-transform: capitalize;
-	font-size: 30px;
-	margin-top: 30px;
+	font-size: 20px;
+	margin:5px auto;
 	
 }
 
@@ -1163,7 +1164,7 @@ background-color: #ffffff;
 }
 #projdet{
 	color:#73bf2d;
-	font-size: 40px;
+	font-size: 30px;
 	text-align: center;
 	margin-bottom: 0px;
 	margin-top: -25px;
@@ -1277,6 +1278,8 @@ hr.editorrule{
 .editor{
 	height:100%;
 	border-bottom:2px solid rgba(50,40,90,0.5);
+	padding-top:10px;
+	padding-bottom:10px;
 }
 
 #editorsf{
@@ -1292,7 +1295,8 @@ hr.editorrule{
 
 }
 
-#editorsampleimgs{float:left;}
+#editorsampleimgs{float:right; height:100px; width:50%; width:50%; overflow-x:scroll; overflow-y:hidden;}
+.infinite-hor{width:1000px;}
 #editorsampleimgs img{
 	height:65px;
 	width:65px;
@@ -1306,6 +1310,7 @@ hr.editorrule{
 	display: inline-block;
 	margin-right:1px ;
 	border:2px solid #3399CC;
+	cursor:pointer;
 
 }
 .boright{
@@ -1327,11 +1332,10 @@ hr.editorrule{
 
 #slider1{
 	width:88%;
-	height: 100%;
-	margin-top:50px;
 	position: relative;
 	margin-left: 6%;
-
+	margin-bottom:10px;
+	height:450px;
 }
 
 .edtrsmpl{
@@ -1586,6 +1590,15 @@ margin-left: 0px;
 	
 }
 
+#prevpic{
+	background-position:center;
+	background-size:contain;
+	background-repeat:no-repeat;
+	height:100%;
+	width:100%;
+	
+}
+
 #instrfeditor{
 	width:60%;
 	margin-left:20%;
@@ -1603,7 +1616,7 @@ margin-left: 0px;
 	margin-right: 90px;
 	margin-top: 30px;
 	float:right;
-	bottom: 50px;
+	margin-bottom: 10px;
 	background: #3399CC ;
 	text-align: center;
 	
@@ -1808,6 +1821,25 @@ margin-left: 0px;
 	cursor: pointer
 }
 
+#downscroll{
+	padding: 15px;
+	text-align: center;
+	position: fixed;
+	bottom:20px;
+	right: 20px;
+	font-size: 20px;
+	font-weight: bold;
+	background: rgba(70,70,70,0.1);
+	color: #73bf2d;
+	z-index:5;
+	visibility:visible;
+}
+
+#downscroll:hover{
+	background: rgba(70,70,70,0.25);
+	cursor: pointer
+}
+
 #tri{
 	cursor: pointer;
 }
@@ -1913,6 +1945,7 @@ margin-left: 0px;
 	-webkit-filter:blur(8px);
 }
 
+
 #photoModal2{
 	z-index: 12;
 	position: fixed;
@@ -1925,11 +1958,21 @@ margin-left: 0px;
 	overflow-y:hidden;
 	box-shadow: 0 0 25px 4px #000;
 	background: rgba(0,0,0,0);
-	
-	
 }
 
-#closeButton3,#closeButton4{
+#closeButton5,#rightButton5,#leftButton5{
+	z-index: 1003 !important;
+}
+
+#photoModal3 #photoModal2{
+	z-index:1002 !important;
+}
+
+#photoModal3 .fullwhiteoverlay{
+	z-index:1001;
+}
+
+#closeButton3,#closeButton4,#closeButton5{
 	background: url('../images/close.png');
 	height:30px;
 	width:30px;
@@ -1942,7 +1985,7 @@ margin-left: 0px;
 	background-size: contain;
 }
 
-#closeButton3:hover,#closeButton4:hover{
+#closeButton3:hover,#closeButton4:hover,#closeButton5:hover{
 	cursor:pointer;
 	opacity: 1.0;
 	-webkit-transition: all 0.2s ease-in;-moz-transition: all 0.2s ease-in;-ms-transition: all 0.2s ease-in;-o-transition: all 0.2s ease-in;transition: all 0.2s ease-in;
@@ -1952,7 +1995,7 @@ margin-left: 0px;
 	right:15px;
 }
 
-#leftButton3,#leftButton4{
+#leftButton3,#leftButton4,#leftButton5{
 	background: url('../images/previous.png');
 	height:30px;
 	width:30px;
@@ -1965,7 +2008,7 @@ margin-left: 0px;
 	background-size: contain;
 }
 
-#leftButton3:hover,#leftButton4:hover{
+#leftButton3:hover,#leftButton4:hover,,#leftButton5:hover{
 	cursor:pointer;
 	opacity: 1.0;
 	-webkit-transition: all 0.2s ease-in;-moz-transition: all 0.2s ease-in;-ms-transition: all 0.2s ease-in;-o-transition: all 0.2s ease-in;transition: all 0.2s ease-in;
@@ -1975,7 +2018,7 @@ margin-left: 0px;
 	left:15px;
 }
 
-#rightButton3,#rightButton4{
+#rightButton3,#rightButton4,#rightButton5{
 	background: url('../images/next.png');
 	height:30px;
 	width:30px;
@@ -1988,7 +2031,7 @@ margin-left: 0px;
 	background-size: contain;
 }
 
-#rightButton3:hover,#rightButton4:hover{
+#rightButton3:hover,#rightButton4:hover,#rightButton5:hover{
 	cursor:pointer;
 	opacity: 1.0;
 	-webkit-transition: all 0.2s ease-in;-moz-transition: all 0.2s ease-in;-ms-transition: all 0.2s ease-in;-o-transition: all 0.2s ease-in;transition: all 0.2s ease-in;
@@ -2022,7 +2065,7 @@ margin-left: 0px;
 	width: 50%;
 	height:100%;
 	position: absolute;
-	background: rgba(220,220,220,1);
+	background: rgba(170,170,170,1);
 	overflow: hidden;
 	-webkit-transition: all 0.7s ease-in;-moz-transition: all 0.7s ease-in;-ms-transition: all 0.7s ease-in;-o-transition: all 0.7s ease-in;transition: all 0.7s ease-in;
 }
@@ -2042,7 +2085,7 @@ margin-left: 0px;
 	width:80%;
 	border-right: 3.5px solid #333;
 	border-left: 3.5px solid #333;	
-	background: rgba(170,170,170,1);
+	background: rgba(245,245,245,1);
 }
 
 .modalImg2:hover,.modalImg:hover{
@@ -2254,6 +2297,14 @@ hr {
   height: 3px;
   background-image: linear-gradient(90deg,    hsla(210, 29%, 24%,0) 0%,    hsla(210, 29%, 24%, 1) 50%,    hsla(210, 29%, 24%, 0) 100%);
 
+}
+
+.fade{
+	visibility:hidden;
+	height:0 !important;
+	width:0 !important;
+	margin:0 !important;
+	padding:0 !important;
 }
 
 .rotatedTriangle{

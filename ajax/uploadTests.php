@@ -32,5 +32,6 @@
 		}
 		$editor->status = Editor::PENDING;
 		$editor->save();
+		echo $file->name;
 	}
 ?>

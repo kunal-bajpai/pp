@@ -13,15 +13,7 @@
 		mkdir(UPLOAD_DIR."projects/project".$project->id."/done/",0777,true);
 	if(!is_dir(UPLOAD_DIR."projects/project".$project->id."/wm/"))
 		mkdir(UPLOAD_DIR."projects/project".$project->id."/wm/",0777,true);
-	if(!is_dir(UPLOAD_DIR."projects/project".$project->id."/done/thumbs/"))
-		mkdir(UPLOAD_DIR."projects/project".$project->id."/done/thumbs/",0777,true);
-	if(!is_dir(UPLOAD_DIR."projects/project".$project->id."/wm/thumbs/"))
-		mkdir(UPLOAD_DIR."projects/project".$project->id."/wm/thumbs/",0777,true);
-	if(!is_dir(UPLOAD_DIR."projects/project".$project->id."/done/prev/"))
-		mkdir(UPLOAD_DIR."projects/project".$project->id."/done/prev/",0777,true);
-	if(!is_dir(UPLOAD_DIR."projects/project".$project->id."/wm/prev/"))
-		mkdir(UPLOAD_DIR."projects/project".$project->id."/wm/prev/",0777,true);
-	if(is_array($files))
+		if(is_array($files))
 		foreach($files as $file)
 		{
 			if(!$file->is_image())
@@ -46,10 +38,6 @@
 			$donepic->save();
 			$file->save_file_in(UPLOAD_DIR."projects/project".$project->id."/done/");
 			watermarkImage(UPLOAD_DIR."projects/project".$project->id."/done/".$donepic->name,UPLOAD_DIR."projects/project".$project->id."/wm/".$donepic->wmName());
-			compress(UPLOAD_DIR."projects/project".$project->id."/done/".$donepic->name,UPLOAD_DIR."projects/project".$project->id."/done/prev/".$donepic->name);
-			compress(UPLOAD_DIR."projects/project".$project->id."/wm/".$donepic->wmName(),UPLOAD_DIR."projects/project".$project->id."/wm/prev/".$donepic->wmName());
-			thumbnail(UPLOAD_DIR."projects/project".$project->id."/wm/prev/".$donepic->wmName(),UPLOAD_DIR."projects/project".$project->id."/wm/thumbs/".$donepic->wmName());
-			thumbnail(UPLOAD_DIR."projects/project".$project->id."/done/prev/".$donepic->name,UPLOAD_DIR."projects/project".$project->id."/done/thumbs/".$donepic->name);
 			$fileDet['name']=$file->name;
 			$fileDet['original']=$picture->name;
 			$fileDet['id']=$donepic->id;

@@ -142,6 +142,7 @@ for(var i=0;i<radios.length;i++)
 function removeClass(elem,className)
 {
 	elem.setAttribute('class',elem.className.replace(' '+className,''));
+	elem.setAttribute('class',elem.className.replace(className,''));
 }
 
 function addToList(projects,projType) {

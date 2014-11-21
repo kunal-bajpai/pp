@@ -1,8 +1,10 @@
 var origPictures, xmlpics = new XMLHttpRequest(), editPictures, fileQueue, currentFile;
 xmlpics.open("GET","ajax/getAllPictures.php?projId="+projectId,false);
 xmlpics.send();
-origPictures = JSON.parse(xmlpics.responseText).original;
-editPictures = JSON.parse(xmlpics.responseText).edited;
+uploadCount = 0; //counter of number of files successfully uploaded, to be logged
+pictures = JSON.parse(xmlpics.responseText);
+origPictures = pictures.original;
+editPictures = pictures.edited;
 singleCarousel = new Carousel("photoModal1", "pictures/projects/project" + projectId + "/original/prev/", "name", origPictures);
 editCarousel = new dualCarousel("photoModal", "pictures/projects/project" + projectId + "/original/prev/", "original", editPictures,"pictures/projects/project" + projectId + "/done/prev/", "name");
 
@@ -13,24 +15,24 @@ function fileSelected() {
 	if(files.length>0)
 	{
 		document.getElementById("uploaddiv").style.visibility="visible";
-		document.getElementById("uploadButton2").style.visibility="visible";
+		document.getElementById("uploadButton2").style.display='block';
 	}
 	else
 	{
 		stage = 1;
 		document.getElementById("uploaddiv").style.visibility="hidden";
-		document.getElementById("uploadButton2").style.visibility="hidden";
+		document.getElementById("uploadButton2").style.display="none";
 	}
 	
 	//calculate size of pictures chosen
-  	var fileSize = 0;
-  	if(files)
-	  for(var i=0;i<files.length;i++)
-	  	fileSize += files[i].size;
+		var fileSize = 0;
+		if(files)
+		for(var i=0;i<files.length;i++)
+			fileSize += files[i].size;
 	if (fileSize > 1024 * 1024)
-  		fileSize = (Math.round(fileSize * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+			fileSize = (Math.round(fileSize * 100 / (1024 * 1024)) / 100).toString() + 'MB';
 	else
-		fileSize = (Math.round(fileSize * 100 / 1024) / 100).toString() + 'KB';   
+		fileSize = (Math.round(fileSize * 100 / 1024) / 100).toString() + 'KB';	 
 	var filedetdiv = document.getElementsByClassName("post_upload");
 	for(i=0;i<filedetdiv.length;i++)
 		if(files.length == 1)
@@ -41,19 +43,23 @@ function fileSelected() {
 
 //ajax call to start uploading files
 function uploadFile() {
-  var buttons = document.getElementsByClassName("label_upload"); //hide all select file buttons
-  for(i=0;i<buttons.length;i++)
-  	buttons[i].style.visibility = "hidden";
-  document.getElementById("uploadButton2").style.visibility="hidden"; //hide upload button in the preivew modal
-  
-  //display the progress bar
-  var num = document.getElementsByClassName('progressNumber')
-  for(i=0;i<num.length;i++)
-  	num[i].style.visibility='visible';
-  	
-  fileQueue = document.getElementById("fileToUpload").files;
-  currentFile = 0;
-  upload();
+	var buttons = document.getElementsByClassName("label_upload"); //hide all select file buttons
+	for(i=0;i<buttons.length;i++)
+		buttons[i].style.visibility = "hidden";
+	document.getElementById("uploadButton2").style.display="none"; //hide upload button in the preivew modal
+
+	postuploads = document.getElementsByClassName("post_upload");
+	for(i=0;i<postuploads.length;i++)
+		postuploads[i].innerHTML = ''; //empty file selected text
+
+	//display the progress bar
+	var num = document.getElementsByClassName('progressNumber')
+	for(i=0;i<num.length;i++)
+		num[i].style.visibility='visible';
+		
+	fileQueue = document.getElementById("fileToUpload").files;
+	currentFile = 0;
+	upload();
 }
 
 //upload current file in queue
@@ -72,109 +78,143 @@ function upload() {
 }
 
 function uploadProgress(evt) {
-  if (evt.lengthComputable) {
-    var percentComplete = Math.round((currentFile + (evt.loaded / evt.total)) * 100 / fileQueue.length);
-    //set upload progress in the bars
-    divs = document.getElementsByClassName('progressNumber');
-    for(var i=0;i<divs.length;i++)
-    {
-    	divs[i].querySelector(".greenbar").style.width = percentComplete.toString() + '%';
-    	divs[i].querySelector(".bluebar").style.width = (100-percentComplete).toString() + '%';
-    	divs[i].querySelector(".uploadper").innerHTML = percentComplete.toString() + "<span style='color:#3399CC'>%</span>";
-  	}
-  }
-  else {
-    divs = document.getElementsById('progressNumber');
-    for(var i=0;i<divs.length;i++)
-    {
-    	divs[i].querySelector(".greenbar").style.width = '0';
-    	divs[i].querySelector(".bluebar").style.width = '100%';
-    	divs[i].querySelector(".uploadper").innerHTML = 'Cannot compute';
-  	}
-  }
+	if (evt.lengthComputable) {
+	  var percentComplete = Math.round((currentFile + (evt.loaded / evt.total)) * 100 / fileQueue.length);
+	  //set upload progress in the bars
+	  divs = document.getElementsByClassName('progressNumber');
+	  for(var i=0;i<divs.length;i++)
+	  {
+	  	divs[i].querySelector(".greenbar").style.width = percentComplete.toString() + '%';
+	  	divs[i].querySelector(".bluebar").style.width = (100-percentComplete).toString() + '%';
+	  	divs[i].querySelector(".uploadper").innerHTML = percentComplete.toString() + "<span style='color:#3399CC'>%</span>";
+		}
+	}
+	else {
+	  divs = document.getElementsById('progressNumber');
+	  for(var i=0;i<divs.length;i++)
+	  {
+	  	divs[i].querySelector(".greenbar").style.width = '0';
+	  	divs[i].querySelector(".bluebar").style.width = '100%';
+	  	divs[i].querySelector(".uploadper").innerHTML = 'Cannot compute';
+		}
+	}
 }
 
 function uploadComplete(evt) {
-  // This event is raised when the server send back a response
-  var target = evt.srcElement || evt.target;
+	// This event is raised when the server send back a response
+	var target = evt.srcElement || evt.target;
 	if(target.responseText == "-1")
 	{
 		alert("Error linking project. Please ensure that you are signed in.");
 	}
 	else
 	{
-	  var resp = JSON.parse(target.responseText);
-	  for(i=0;i<resp.length;i++)
-	  {
-	  	dummy = document.getElementById("imgBox2dummy").cloneNode(true);
-	  	dummy.id='imgBox2';
-	  	dummy.style.display='inline';
-	  	dummy.querySelector(".imgThumb2").src = "pictures/projects/project"+projectId+"/done/thumbs/"+resp[i].name;
-		dummy.querySelector(".imgThumb2").onclick = function() {
-			editCarousel.setPic(this.dataset.pic);
-			document.body.style.overflow = 'hidden';
-			document.getElementById("photoModal2").style.display="block";
-			document.getElementsByClassName("fullBlackOverlay")[0].style.display="block";
+		try
+		{
+			var resp = JSON.parse(target.responseText);
+			editPictures = editPictures.concat(resp);
+			for(i=0;i<resp.length;i++)
+			{
+				dummy = document.getElementById("imgBox2dummy").cloneNode(true);
+				dummy.id='imgBox2';
+				dummy.style.display='inline';
+				dummy.querySelector(".imgThumb2").style.backgroundImage = "url(pictures/projects/project"+projectId+"/done/thumbs/"+resp[i].name+')';
+				dummy.querySelector(".imgThumb2").onclick = function() {
+					editCarousel.setPic(this.dataset.pic);
+					document.documentElement.style.overflowY = 'hidden';
+					document.getElementById("photoModal2").style.display="block";
+					document.getElementsByClassName("fullBlackOverlay")[0].style.display="block";
+				}
+				dummy.querySelector(".imgThumb2").dataset.pic = resp[i].name;
+				dummy.dataset.id = resp[i].id;
+				dummy.querySelector(".tickSym").onclick = function() {
+					deleteImage(this.parentNode.dataset.id);
+					this.parentNode.parentNode.removeChild(this.parentNode);
+				}
+				editCarousel.pictures[editCarousel.pictures.length] = {id:resp[i].id,name:resp[i].name, original:resp[i].original};
+				document.getElementById("editPicsPreview2").appendChild(dummy);
+				j = editPictures.length - 1 - i;
+				editPictures[j].xmlthumb = new XMLHttpRequest();
+				editPictures[j].xmlthumb.open("GET","ajax/thumbDonePic.php?id="+projectId+"&picId="+resp[i].id,true);
+				editPictures[j].xmlthumb.onreadystatechange = function() {
+					if(this.status==200 && this.readyState==4)
+					{
+						var divs = document.getElementsByClassName("imgThumb2");
+						for(i=0;i<divs.length;i++)
+							if(divs[i].dataset.pic == this.responseText)
+								divs[i].style.backgroundImage = divs[i].style.backgroundImage;
+					}
+				}
+				editPictures[j].xmlthumb.send();
+			}
+			uploadCount+=resp.length;
 		}
-	  	dummy.querySelector(".imgThumb2").dataset.pic = resp[i].name;
-	  	dummy.dataset.id = resp[i].id;
-	  	dummy.querySelector(".tickSym").onclick = function() {
-	  		deleteImage(this.parentNode.dataset.id);
-	  		this.parentNode.parentNode.removeChild(this.parentNode);
-	  	}
-	  	editCarousel.pictures[editCarousel.pictures.length] = {id:resp[i].id,name:resp[i].name, original:resp[i].original};
-	  	document.getElementById("editPicsPreview2").appendChild(dummy);
-	  }
-	  if(currentFile < fileQueue.length-1)
-	  {
-	  	currentFile++;
-	  	upload();
-	  	return;
-	  }
+		catch(e) {}
+		finally
+		{
+			if(currentFile < fileQueue.length-1)
+			{
+				currentFile++;
+				upload();
+				return;
+			}
+		}
 	}
 	var xmllog = new XMLHttpRequest();
 	xmllog.open("POST","ajax/logUploadPic.php",true);
 	xmllog.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmllog.send("id="+projectId+"&num="+currentFile);
-  var upStage = document.getElementsByClassName('uploadStage')
-  for(var i=0;i<upStage.length;i++)
-  	upStage[i].innerHTML='Upload completed';
-  
-  document.getElementById("uploadButton2").style.visibility="hidden"; //show upload file button again
-  
-  var num = document.getElementsByClassName('progressNumber'); //hide progress bar
-  for(i=0;i<num.length;i++)
-  	num[i].style.visibility='hidden';
+	xmllog.send("id="+projectId+"&num="+uploadCount);
+	uploadCount=0;
+	var upStage = document.getElementsByClassName('uploadStage')
+	for(var i=0;i<upStage.length;i++)
+		upStage[i].innerHTML='Upload completed';
+	
+	document.getElementById("uploadButton2").style.display="none"; //hide upload file button again
+	
+	var num = document.getElementsByClassName('progressNumber'); //hide progress bar
+	for(i=0;i<num.length;i++)
+		num[i].style.visibility='hidden';
 
-  var buttons = document.getElementsByClassName("label_upload"); //show select files button
-  for(i=0;i<buttons.length;i++)
-  	buttons[i].style.visibility = "visible";
-  	
+	var buttons = document.getElementsByClassName("label_upload"); //show select files button
+	for(i=0;i<buttons.length;i++)
+		buttons[i].style.visibility = "visible";
+		
 	document.getElementById("fileToUpload").value=''; //reset file input
 	
-	postuploads = document.getElementsByClassName("post_upload");
-	for(i=0;i<postuploads.length;i++)
-		postuploads[i].innerHTML = '';
-}
+	}
 
 function uploadFailed(evt) {
 	var num = document.getElementsByClassName('progressNumber');
-  for(i=0;i<num.length;i++)
-  	num[i].style.visibility='hidden';
-  alert("There was an error attempting to upload the file.");
+	for(i=0;i<num.length;i++)
+		num[i].style.visibility='hidden';
+	alert("There was an error attempting to upload the file.");
+	var upStage = document.getElementsByClassName('uploadStage')
+	for(var i=0;i<upStage.length;i++)
+		upStage[i].innerHTML='';
+	
+	document.getElementById("uploadButton2").style.display="block"; //hide upload file button again
+	
+	var num = document.getElementsByClassName('progressNumber'); //hide progress bar
+	for(i=0;i<num.length;i++)
+		num[i].style.visibility='hidden';
+
+	var buttons = document.getElementsByClassName("label_upload"); //show select files button
+	for(i=0;i<buttons.length;i++)
+		buttons[i].style.visibility = "visible";
+		
 }
 
 function uploadCanceled(evt) {
-  alert("The upload has been canceled by the user or the browser dropped the connection.");
+	alert("The upload has been canceled by the user or the browser dropped the connection.");
 }
 
 //code starting here is to implement preview carousel
 
-imgdivs = document.getElementsByClassName("imgThumb");
+imgdivs = document.getElementsByClassName("imgBox");
 for(var i=0;i<imgdivs.length;i++)
-	imgdivs[i].onclick = function() {
+	imgdivs[i].querySelector(".imgThumb").onclick = function() {
 		singleCarousel.setPic(this.dataset.pic);
-		document.body.style.overflow = 'hidden';
+		document.documentElement.style.overflowY = 'hidden';
 		singleCarousel.modal.style.display="block";
 	}
 	
@@ -195,15 +235,15 @@ document.onkeyup = function(e) {
 		if(e.keyCode==39)
 			editCarousel.changePic(1);
 		if(e.keyCode==27)
-			document.getElementById("closeButton2").click();
+			document.getElementById("closeButton3").click();
 	}
 }
 
-imgdivs = document.getElementsByClassName("imgThumb2");
+imgdivs = document.getElementsByClassName("imgBox2");
 for(var i=0;i<imgdivs.length;i++)
-	imgdivs[i].onclick = function() {
+	imgdivs[i].querySelector(".imgThumb2").onclick = function() {
 		editCarousel.setPic(this.dataset.pic);
-		document.body.style.overflow = 'hidden';
+		document.documentElement.style.overflowY = 'hidden';
 		document.getElementById("photoModal2").style.display="block";
 		document.getElementsByClassName("fullBlackOverlay")[0].style.display="block";
 	}
@@ -238,10 +278,10 @@ for(i=0;i<toSelects.length;i++)
 {
 	toSelects[i].onclick = function() {
 		this.parentNode.querySelector('.blackOverlay').style.display='inline';
-        this.parentNode.querySelector('.tickSym').style.display='inline';
+	      this.parentNode.querySelector('.tickSym').style.display='inline';
 		this.parentNode.querySelector('.toSelect').style.display='none';
-        this.parentNode.querySelector('.toUnselect').style.display='block';
-        this.parentNode.dataset.selected=1;
+	      this.parentNode.querySelector('.toUnselect').style.display='block';
+	      this.parentNode.dataset.selected=1;
 	}
 }
 
@@ -250,10 +290,10 @@ for(i=0;i<toUnselects.length;i++)
 {
 	toUnselects[i].onclick = function() {
 		this.parentNode.querySelector('.blackOverlay').style.display='none';
-        this.parentNode.querySelector('.tickSym').style.display='none';
-        this.parentNode.querySelector('.toSelect').style.display='block';
-        this.parentNode.querySelector('.toUnselect').style.display='none';
-        this.parentNode.dataset.selected=0;
+	      this.parentNode.querySelector('.tickSym').style.display='none';
+	      this.parentNode.querySelector('.toSelect').style.display='block';
+	      this.parentNode.querySelector('.toUnselect').style.display='none';
+	      this.parentNode.dataset.selected=0;
 	}
 }
 
@@ -272,13 +312,16 @@ document.getElementById("dwnldButton2").onclick = function() {
 }
 
 function deleteImage(id) {
-	xmldel = new XMLHttpRequest();
-	xmldel.open("POST","ajax/deleteDonePic.php",false);
-	xmldel.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmldel.send("id="+id);
-	for(i=0;i<editCarousel.pictures.length;i++)
-		if(editCarousel.pictures[i].id == id)
-			editPictures.splice(i,1);
+	if(confirm("The edited photo will be permanently deleted."))
+	{
+		xmldel = new XMLHttpRequest();
+		xmldel.open("POST","ajax/deleteDonePic.php",false);
+		xmldel.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmldel.send("id="+id);
+		for(i=0;i<editCarousel.pictures.length;i++)
+			if(editCarousel.pictures[i].id == id)
+				editPictures.splice(i,1);
+	}
 }
 
 document.getElementById("dropProject").onclick = function() {

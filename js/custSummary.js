@@ -1,32 +1,13 @@
-var origPictures, currentOrigPicName, currentOrigPic, xmlpics = new XMLHttpRequest();
+var xmlpics = new XMLHttpRequest();
 var editPictures, currentEditPicName, currentEditPic;
 xmlpics.open("GET","ajax/getAllPictures.php?projId="+projectId,false);
 xmlpics.send();
-origPictures = JSON.parse(xmlpics.responseText).original;
 editPictures = JSON.parse(xmlpics.responseText).edited;
-singleCarousel = new Carousel("photoModal1", "pictures/projects/project" + projectId + "/original/prev/", "name", origPictures);
 editCarousel = new dualCarousel("photoModal", "pictures/projects/project" + projectId + "/original/prev/", "original", editPictures,"pictures/projects/project" + projectId + "/wm/prev/", "name");
 
 //code starting here is to implement preview carousel
 	
-imgdivs = document.getElementsByClassName("imgThumb");
-for(var i=0;i<imgdivs.length;i++)
-	imgdivs[i].onclick = function() {
-		singleCarousel.setPic(this.dataset.pic);
-		document.documentElement.style.overflowY = 'hidden';
-		document.getElementById("photoModal1").style.display="block";
-	}
-	
 document.onkeyup = function(e) {
-	if(document.getElementById("photoModal1").style.display=='block')
-	{
-		if(e.keyCode==37)
-			singleCarousel.changePic(-1);
-		if(e.keyCode==39)
-			singleCarousel.changePic(1);
-		if(e.keyCode==27)
-			document.getElementById("closeButton1").click();
-	}
 	if(document.getElementById("photoModal2").style.display=='block')
 	{
 		if(e.keyCode==37)
@@ -79,7 +60,7 @@ for(i=0;i<toSelects.length;i++)
 		this.parentNode.querySelector('.blackOverlay').style.display='inline';
 	        this.parentNode.querySelector('.tickSym').style.display='inline';
 		this.parentNode.querySelector('.toSelect').style.display='none';
-	        this.parentNode.querySelector('.toUnselect').style.display='block';
+        	this.parentNode.querySelector('.toUnselect').style.display='block';
 	        this.parentNode.dataset.selected=1;
 	        changeSelected(this.parentNode.dataset.id,this.parentNode.dataset.selected);
 	}
@@ -104,36 +85,4 @@ function changeSelected(picId,action) {
 	xmlchosen.open("POST","ajax/changeChosen.php",true);
 	xmlchosen.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xmlchosen.send("id="+picId+"&action="+action);
-}
-
-if(document.getElementById("removeEditor") != null)
-	document.getElementById("removeEditor").onclick = function() {
-		xmlremove = new XMLHttpRequest();
-		xmlremove.onreadystatechange = function() {
-			if(this.readyState == 4 && this.status == 200)
-			{
-				document.getElementById("currentEditor").innerHTML = "No one";
-				var button = document.getElementById("removeEditor");
-				button.parentNode.removeChild(button);
-			}
-		}
-		xmlremove.open("POST","ajax/removeEditor.php",true);
-		xmlremove.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xmlremove.send("projId="+projectId);
-	}
-
-document.getElementById("cancelProject").onclick = function() {
-	if(confirm("Cancelling the project will delete all original and edited pictures. This action is irreversible!"))
-	{
-		xmlcancel = new XMLHttpRequest();
-		xmlcancel.onreadystatechange = function() {
-			if(this.readyState == 4 && this.status == 200)
-			{
-				window.location.href='index.php';
-			}
-		}
-		xmlcancel.open("POST","ajax/custCancelProj.php",true);
-		xmlcancel.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xmlcancel.send("id="+projectId);
-	}
 }

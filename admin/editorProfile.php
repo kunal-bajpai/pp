@@ -31,8 +31,8 @@
 		$editor->status = $_POST['status'];
 		$editor->save();
 	}
-	$basicProjects = Project::find_by_sql("SELECT projects.id, projects.name, COUNT(*) count FROM projects JOIN pictures ON pictures.project = projects.id JOIN donepics ON donepics.original = pictures.id WHERE donepics.chosen = 1 AND donepics.editor = {$editor->id} AND projects.type = 0 AND donepics.editor NOT IN (SELECT editor FROM edit_payout WHERE project = projects.id) GROUP BY projects.id;");
-	$advancedProjects = Project::find_by_sql("SELECT projects.id, projects.name, COUNT(*) count FROM projects JOIN pictures ON pictures.project = projects.id JOIN donepics ON donepics.original = pictures.id WHERE donepics.chosen = 1 AND donepics.editor = {$editor->id} AND projects.type = 1 AND donepics.editor NOT IN (SELECT editor FROM edit_payout WHERE project = projects.id) GROUP BY projects.id;");
+	$basicProjects = Project::find_by_sql("SELECT projects.id, projects.name, COUNT(*) count FROM projects JOIN pictures ON pictures.project = projects.id JOIN donepics ON donepics.original = pictures.id WHERE donepics.chosen = 1 AND donepics.editor = {$editor->id} AND projects.type = 0 AND projects.status = ".Project::COMPLETED." AND donepics.editor NOT IN (SELECT editor FROM edit_payout WHERE project = projects.id) GROUP BY projects.id;");
+	$advancedProjects = Project::find_by_sql("SELECT projects.id, projects.name, COUNT(*) count FROM projects JOIN pictures ON pictures.project = projects.id JOIN donepics ON donepics.original = pictures.id WHERE donepics.chosen = 1 AND donepics.editor = {$editor->id} AND projects.type = 1 AND projects.status = ".Project::COMPLETED." AND donepics.editor NOT IN (SELECT editor FROM edit_payout WHERE project = projects.id) GROUP BY projects.id;");
 	$basicDue = 0;
 	$advancedDue = 0;
 ?>

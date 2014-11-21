@@ -1,7 +1,7 @@
 <?php
 	require_once("includes/init.php");
 	$session = Session::get_instance();
-	//Session::get_instance()->require_login();
+	Session::get_instance()->require_login();
 	$project = Project::find_by_id($_GET['id']);
 	$pictures = Picture::find_for_project($project);
 	$donepics = DonePic::find_for_project($project);
@@ -54,7 +54,26 @@
 
 
 
-	<?php include("editHeader.html");?>
+	<div id="nav" style='z-index:1;' >
+		<div class='wrap4'>	 
+		<div id="lefter">
+		<nav id='navleft' class="menuhead" class='wrap4'>
+		<ul>
+			<li class="b1 active"><a href="editMyProjList.php" style="text-decoration: none;">My Projects</a></li>
+			<li class="b1 "><a href="editNewProjList.php" style="text-decoration:none;">New Projects</a></li>
+			<li class="b1 "><a href="#" style="text-decoration: none;">Profile</a></li>
+			<li class="b1 "><a href="editTakeTest.php" style="text-decoration: none;">Re-take Test</a></li>
+			<li class="b1 "><a href="editLogout.php" style="text-decoration: none;">Logout</a></li>
+		</ul>
+		</nav>
+		</div>
+
+		<div id="righter">
+		   <ul id='navright' class="menu"></ul>
+		</div>
+
+		</div>
+	</div>
 	 
 	<div id='wrapper'>
 		<h5 id='wel2'><span class='bluec'><?php echo $project->name;?></span></h5>
@@ -71,9 +90,9 @@
 			   		if(is_array($pictures))
 			   			foreach($pictures as $picture):
 			   	?>
-				<div id='imgBox' class='imgBox' data-selected='0' data-id="<?php echo $picture->id;?>">
-					<img id='imgThumb' class='imgThumb' src='<?php echo "pictures/projects/project".$project->id."/original/thumbs/".$picture->name;?>' data-pic='<?php echo $picture->name;?>'>
-					<div id='blackOverlay' class='blackOverlay greenc'>selected</div>
+				<div id='imgBox' class='imgBox' data-selected='0'>
+					<div id='imgThumb' class='imgThumb' data-pic='<?php echo $picture->name;?>' data-id="<?php echo $picture->id;?>" style='background-image:url(<?php echo "pictures/projects/project".$project->id."/original/thumbs/".$picture->name;?>)'></div>
+					<div id='blackOverlay' class='blackOverlay greenc' style="position:absolute; top:0; left:0; ">selected</div>
 					<div id='tickSym' class='tickSym greenc'> &#10004;</div>
 					<?php if($project->type == 1 && $picture->instructions!=''):?><div class='instrLabel'> INSTRUCTION GIVEN</div><?php endif;?>
 					<div id='toSelect' class='toSelect greenc'>Select</div>
@@ -98,7 +117,7 @@
 
 			<div id='editPicsPreview2'>
 				<div id='imgBox2dummy' style='display:none' class='imgBox2'>
-					<img id='imgThumb2' class='imgThumb2' src='' data-pic=''>
+					<div id='imgThumb2' class='imgThumb2' data-pic=''></div>
 					<div id='blackOverlay2' class='bluec'>chosen</div>
 					<div id='tickSym2' class='tickSym bluec' onclick=""> &#10008;</div>
 				</div>
@@ -107,7 +126,7 @@
 			   			foreach($donepics as $donepic):
 			   	?>
 				<div id='imgBox2' class='imgBox2'>
-					<img id='imgThumb2' class='imgThumb2' src='<?php echo "pictures/projects/project".$project->id."/done/thumbs/".$donepic->name;?>' data-pic='<?php echo $donepic->name;?>'>
+					<div id='imgThumb2' class='imgThumb2' data-pic='<?php echo $donepic->name;?>' style='background-image:url(<?php echo "pictures/projects/project".$project->id."/done/thumbs/".$donepic->name;?>)'></div>
 					<?php if($donepic->is_chosen()):?>
 					<div id='blackOverlay2' class='bluec'>chosen</div>
 					<?php elseif($donepic->editor == $session->logged_in_user()->id):?>
@@ -126,12 +145,12 @@
 				<label for="fileToUpload"><div id='pushl' class='blueb round-corners' >Add more pictures</div></label> <button id="dropProject" class="redb">Drop Project</button>
 				<div id="uploaddiv" style="visibility:hidden">
 					
-					<button  class='label_upload2 modalButton blueb round-corners' id="uploadButton2" style="visibility:hidden" onclick="uploadFile()">Upload</button>
-					<div class='post_upload' style="margin-top:10px;"></div>
+					<button  class='label_upload2 modalButton blueb round-corners' id="uploadButton2" style="display:none" onclick="uploadFile()">Upload</button>
+					<div class='post_upload' style="margin-top:10px; text-align:center;"></div>
 				</div>
 				<div class="progressNumber" style='visibility:hidden'>
 					<div class='greenbar' style="width:75%;"></div><div class='bluebar' style='width:25%;'></div>
-					<div class='uploadper'>25<span style='color:#3399CC'>%</span></div>
+					<div class='uploadper'>25<span style="color:#3399CC;">%</span></div>
 
 				</div>
 			</div>
@@ -143,7 +162,7 @@
 		<div style="display:none" id='photoModal1' class='photoModal'>
 			<div  class='fullBlackOverlay'></div>
 			<div id='prevPic11' class="modalImg" src="./images/dummy.jpg"></div>
-			<?php if($project->type == 1):?><div class='instrLabel' onmouseover="this.parentNode.querySelector('.instrText').style.visibility='visible';" onmouseout="this.parentNode.querySelector('.instrText').style.visibility='hidden';"> INSTRUCTION GIVEN</div><div class='instrText'></div><?php endif;?>
+			<?php if($project->type == 1):?><div class='instrLabel' ></div><?php endif;?>
 			<div id='closeButton1' class='closeButton bluec'> &times;</div>
 			<div id='leftButton1' class='modalButton bluec'><</div>
 			<div id='rightButton1' class='modalButton bluec'>></div>

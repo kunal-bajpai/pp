@@ -4,6 +4,7 @@
 		ACTION: Removes editor from project
 		RESPONSE: None */
 	require_once("../includes/init.php");
+	session_start();
 	if(isset($_POST['projId']))
 	{
 		$project = Project::find_by_id($_POST['projId']);

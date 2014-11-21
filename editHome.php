@@ -25,25 +25,6 @@
 	<img id="instr1" src="images/pp1.png" onmouseover="this.src='images/pp2.png'" onmouseout="this.src='images/pp1.png'"/>
 	</a>
 	</div>
-
-	<div class="page-scroll scrolldowndiv">
-	    <a id='scrolldownbutton' class="btn btn-circle">
-	        <i class="fa fa-angle-double-down animated"></i>
-	    </a>
-	</div>
-	 
-		  
-  
- 
- <!--<div id='mininav' class='wrap3'>
-		<div id="lefter">
-		<ul id='navleft' class="submenu">
-			<li>
-				Get &nbsp;Your&nbsp; Photos&nbsp; Edited
-			</li>
-		</ul>
-		</div>
-	</div> -->
 			
 			
 		<div id="container" >
@@ -52,15 +33,6 @@
 		  <div id='banner2' >
 		  	<img src="images/banner.png" alt="How it works?">
 		  </div>
-
-
-
-		 <!-- <div id="offer">
-		  <p style="color:black;">I am a wide triangle.</p>
-		  </div> -->
-			
-
-	   <!--   <img id="wideimg" src="./images/wide1.jpg" /> -->
 		   
   
 			<div class="wrapm">
@@ -237,11 +209,11 @@
 				<div class="modal-content" class='wrap_modal'>
 				<form id="projectDetails" enctype="multipart/form-data" method="post">
 				   <div class="row" >
-					 <label for="fileToUpload" > <div class='label_upload'>Upload your pictures</div></label><br />
+					 <label for="fileToUpload" > <div class='label_upload'>Upload your pictures</div></label>
 					 <div class='post_upload'></div>
-					 <input type="file" form="fileForm" name="fileToUpload[]" id="fileToUpload" accept="image/*" onchange="fileSelected();" multiple/>
-					 <input type="hidden" name="mode" id="formMode"/>
-					 <input type="hidden" name="projid" id="formProjId"/>
+					 <input class='fade' type="file" form="fileForm" name="fileToUpload[]" id="fileToUpload" accept="image/*" onchange="fileSelected();" multiple/>
+					 <input class='fade' type="hidden" name="mode" id="formMode"/>
+					 <input class='fade' type="hidden" name="projid" id="formProjId"/>
 				   </div>
 			   <div id='projdet'>Customer Information</div>
 				   <center>Project Name: <input type='text' name="name" id="projectName" required placeholder='Give a name to this project' /><br>
@@ -277,14 +249,23 @@
 					   <div class='uploadper'>25<span style='color:#3399CC'>%</span></div>
 					   <br/><button class="cancelUpload buttonset1">Cancel upload</button>
 				   </div>
-					<div style='width:94%; position:relative; margin:auto;'>Meanwhile, <br/> Take a look at our editors</div>
+					<div style='width:94%; position:relative; margin:auto; font-size:20px; margin-top:15px;'>Meanwhile, you may give a preference for who edits your photos :</div><div class='ibox'>For the first 12 hours, your project will be open to only the editors you give preference to.</div>
 					<div id='editorlist'>
+					
+					<!-- Refer to this for duplication -->
 							<div data-id='0' style="visibility:hidden" class="editor" data-chosen="false">
 								<div id="editorsf">
 									<h1 id='EditorName'>Jimmy Falcon1</h1>
 									x Successes, y Failed
 								</div>
+								
+								<div id='givePreference'>
+									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
+									<img class="fade"  src="./images/selected.png">
+								</div>
+								
 								<div id="editorsampleimgs">
+								<div class='infinite-hor'>
 								<?php
 									if(!is_dir("pictures/tests"))
 										mkdir("pictures/tests",0777,true);
@@ -300,19 +281,23 @@
 									</a>
 								<?php endif;?>
 								</div>
-								<div id='givePreference'>
-									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
 								</div>
 								<div style="clear:both" id="clearDiv"></div>
 							</div>
-							<hr id="hr1" class='editorrule'/>
-
+							<!-- ---------------------------------------------------------- -->
 						   <div data-id='0' style="visibility:hidden" class="editor" data-chosen="false">
 								<div id="editorsf">
 									<h1 id='EditorName'>Jimmy Falcon2</h1>
 									x Successes, y Failed
 								</div>
+								
+								<div id='givePreference'>
+									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
+									<img class="fade"  src="./images/selected.png">
+								</div>
+								
 								<div id="editorsampleimgs">
+								<div class='infinite-hor'>
 								<?php
 									if(!is_dir("pictures/tests"))
 										mkdir("pictures/tests",0777,true);
@@ -328,19 +313,24 @@
 									</a>
 								<?php endif;?>
 								</div>
-								<div id='givePreference'>
-									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
 								</div>
 								<div style="clear:both" id="clearDiv"></div>
 							</div>
-							  <hr id="hr2" class='editorrule'/>
 							  
+							<!-- ---------------------------------------------------------- -->
 							<div data-id='0' style="visibility:hidden" class="editor" data-chosen="false">
 								<div id="editorsf">
 									<h1 id='EditorName'>Jimmy Falcon3</h1>
 									x Successes, y Failed
 								</div>
+								
+								<div id='givePreference'>
+									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
+									<img class="fade"  src="./images/selected.png">
+								</div>
+								
 								<div id="editorsampleimgs">
+								<div class='infinite-hor'>
 								<?php
 									if(!is_dir("pictures/tests"))
 										mkdir("pictures/tests",0777,true);
@@ -356,13 +346,12 @@
 									</a>
 								<?php endif;?>
 								</div>
-								<div id='givePreference'>
-									<img class="star" onclick="prefToggle(this)" src="./images/unselected.png">
 								</div>
 								<div style="clear:both" id="clearDiv"></div>
 							</div>
-							<div id="clearDiv" style="clear:both"></div>
-					</div>
+							
+							<!-- ---------------------------------------------------------- -->
+				</div>
 				</div>
 				<footer>
 					   <button class="footerb round-corners" style="float:left" onclick='moreEditors()'>More editors</button>
@@ -412,7 +401,7 @@
 				</header>
 				<div class="modal-content" class='wrap_modal'>
 				<label for="fileToUpload"><div id='pushl' class='label_upload' >Add more pictures</div></label>
-				<div style="clear:both; width:100%;height:30px;"></div>
+				<div style="clear:both; width:100%;height:15px;"></div>
 				<div id="uploaddiv" style="visibility:hidden">
 				
 				<button  class='label_upload2 modalButton' id="uploadButton2" style="visibility:visible" onclick="uploadFile()">Upload</button>
@@ -456,7 +445,7 @@
 				<div id='leftbtn' onclick="changePic(-1)"><img src="./images/arrowleft.png"></div>
 				<div id='rightbtn' onclick="changePic(1)"><img src="./images/arrowright.png"></div>
 					<div id='slider1'>
-					<img id="prevpic">
+					<div id="prevpic"></div>
 					
 					</div>
 				   <div id='picinstr'>
@@ -498,14 +487,14 @@
 						<textarea id='finprojinstrfeditor' placeholder='Type the instructions for the editor, who would work on your photos...' ></textarea>
 						<div style="clear:both; height:40px; width:100%;"></div>
 						<div id='summinstrhead'><span>Instructions for You</span></div>
-						<div id='summinstr'>Please use <a class="bluec" target="_blank" id="link">this</a> link to access your account and use the password <span id="pass"></span><br/>. We will send you an email whenever a photo is edited so please ensure that the email ID is valid or change it in the above fields.
+						<div id='summinstr'>We will now send you an email containing the link to access your project. Please ensure that the email ID is correct or change it above.
 						</div>
 						<div id='summack'>Thank You for choosing us!</div>
 					</div> 
 				</div>
 				<footer>
 					<a class='footerb round-corners modalButton' href='#basic-imagesprev' style='float:left;'>Back</a>
-					<button id='finishProj' class='bfooterb round-corners' style="margin-right:47%;">OK</button>
+					<button id='finishProj' class='bfooterb round-corners' style="margin-right:47%;">Confirm</button>
 				</footer>
 				</div>
 				<!-- Use Hash-Bang to maintain scroll position when closing modal -->
@@ -518,6 +507,8 @@
 
 
 			  <div id='upscroll'>&#8593;<br><span>Top</span></div>
+			  <div id='downscroll'>&#8595;<br><span>Down</span></div>
+
 
 			  <div id="photoModal" style="display:none">
 				<div class='fullwhiteoverlay'></div>
@@ -562,17 +553,17 @@
 		<script type="text/javascript">
 		$(function()
 			{
-			   $('#scrolldownbutton').click(function(){
+			   $('#downscroll').click(function(){
 				  $('html, body').animate({scrollTop : 610},800);
 				  return false;
 				});
 				$(window).scroll(function(){
 				if ($(this).scrollTop() > 100) {
 				  $('#upscroll').css('visibility','visible');
-				  $('.scrolldowndiv').css('visibility','hidden');
+				  $('#downscroll').css('visibility','hidden');
 				} else {
 				  $('#upscroll').css('visibility','hidden');
-				  $('.scrolldowndiv').css('visibility','visible');
+				  $('#downscroll').css('visibility','visible');
 				}
 				});
 				/*$(function() { //When the document loads

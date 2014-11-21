@@ -97,16 +97,37 @@ function uploadComplete(evt) {
 	}
 	else
 	{
-	  	thumbs = document.getElementsByClassName("edited");
+		thumbs = document.getElementsByClassName("edited");
 	  	for(i=0;i<thumbs.length;i++)
-	  		thumbs[i].src = thumbs[i].src + "#" + new Date().getTime();
+			if(evt.srcElement.responseText == thumbs[i].dataset.pic)
+			{
+				thumbs[i].xmlthumb = new XMLHttpRequest();
+				thumbs[i].xmlthumb.open("GET","ajax/thumbTest.php?editorId="+editorId+"name="+thumbs[i].dataset.pic,true);
+				thumbs[i].onreadystatechange = function() {
+					if(this.readyState==4 && this.status==200)
+					{
+						thumbs = document.getElementsByClassName("edited");
+					  	for(i=0;i<thumbs.length;i++)
+							if(thumbs[i].responseText == thumbs[i].dataset.pic)
+								thumbs[i].style.backgroundImage = thumbs[i].style.backgroundImage;
+					}
+				}
+				thumbs[i].xmlthumb.send();
+			}
 	  	if(currentFile < fileQueue.length-1)
 		  {
 		  	currentFile++;
 		  	upload();
 		  	return;
 		  }
+		if(uploadedPictures!=undefined)
+			afterComplete();
+		else
+			uploadFailed(null);
 	}
+
+function afterComplete()
+{
   var upStage = document.getElementsByClassName('uploadStage')
   for(var i=0;i<upStage.length;i++)
   	upStage[i].innerHTML='Upload completed';
@@ -129,10 +150,8 @@ function uploadComplete(evt) {
 }
 
 function uploadFailed(evt) {
-	var num = document.getElementsByClassName('progressNumber');
-  for(i=0;i<num.length;i++)
-  	num[i].style.visibility='hidden';
-  alert("There was an error attempting to upload the file.");
+  afterComplete();
+  alert("There was an error attempting to upload the file. Please ensure it is an image.");
 }
 
 function uploadCanceled(evt) {
@@ -141,48 +160,14 @@ function uploadCanceled(evt) {
 
 //code starting here is to implement preview carousel
 
-//on clicking on a particular picture, bring it up in the preview carousel
-function setPic() {
-	//iterate through pictures to find index of image clicked on
-	for(var i=0;i < pictures.length;i++)
-		if(pictures[i]==currentPicName)
-		{
-			currentPic=i; //store index of pic which will be used later to move forward and backward in the carousel
-			break;
-		}
-	document.getElementById("prevPic11").src = "pictures/tests/" + pictures[currentPic];
-	document.getElementById("prevPic12").src = "pictures/editors/editor"+ editorId + "/" + pictures[currentPic];
-	}
-	//goes to next pic in preview carousel if action>0 and previous if action<0
-function changePic(action) {
-	if(action > 0)
-		if(currentPic >= pictures.length-1)
-			currentPic = 0;
-		else
-			currentPic++;
-	if(action < 0)
-		if(currentPic <= 0)
-			currentPic = pictures.length - 1;
-		else
-			currentPic--;
-	document.getElementById("prevPic11").src = "pictures/tests/" + pictures[currentPic];
-	document.getElementById("prevPic12").src = "pictures/editors/editor"+ editorId + "/" + pictures[currentPic];
-}
-
+carousel = new dualCarousel("photoModal1", "pictures/tests/", "name", pictures,"pictures/editors/editor" + editorId + "/prev/", "name");
 imgdivs = document.getElementsByClassName("imgThumb");
 for(var i=0;i<imgdivs.length;i++)
 	imgdivs[i].onclick = function() {
-		currentPicName = this.dataset.pic;
-		setPic();
-		document.body.style.overflow = 'hidden';
+		carousel.setPic(this.dataset.pic);
+		document.documentElement.style.overflowY = 'hidden';
 		document.getElementById("photoModal1").style.display="block";
-		document.getElementsByClassName("fullBlackOverlay")[0].style.display="block";
 	}
-document.getElementById("closeButton1").onclick = function() {
-	document.body.style.overflow = "auto";
-	document.getElementById("photoModal1").style.display="none";
-	document.getElementsByClassName("fullBlackOverlay")[0].style.display="none";
-}
 	
 document.onkeyup = function(e) {
 	if(document.getElementById("photoModal1").style.display=='block')

@@ -46,7 +46,7 @@ var pictures, currentPic, currentPicName, projectId;
 	for(var i=0;i<imgdivs.length;i++)
 		imgdivs[i].onclick = function() {
 			carousel.setPic(this.querySelector(".imgThumb").dataset.pic);
-			document.body.style.overflow = 'hidden';
+			document.documentElement.style.overflowY = 'hidden';
 			document.getElementById("photoModal1").style.display="block";
 			document.getElementsByClassName("fullBlackOverlay")[0].style.display="block";
 		}
